@@ -50,6 +50,7 @@ export default function AddressPage() {
     id: string;
     symbol: string;
     name: string;
+    description: { en: string };
     links: {
       homepage: string[];
       facebook_username?: string;
@@ -163,17 +164,19 @@ export default function AddressPage() {
       <p
         style={{
           margin: "0 auto",
+          marginBottom: 40,
           padding: "0 20px",
           textAlign: "center",
           color: "#a2a9b0",
           maxWidth: 600,
+          fontSize: "0.9em",
         }}
       >
-        {opensea?.description}
+        {coingecko?.description.en || opensea?.description}
       </p>
       {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
         <>
-          <h4 style={{ marginTop: 40, textAlign: "center" }}>Markets</h4>
+          <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section
             style={{
               margin: "10px auto",
