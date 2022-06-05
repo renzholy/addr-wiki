@@ -5,7 +5,7 @@ export default function ExternalLink(props: {
   href: string;
   size?: number;
 }) {
-  const size = props.size || 60;
+  const size = props.size || 30;
 
   return (
     <a
