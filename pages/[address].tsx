@@ -80,21 +80,6 @@ export default function AddressPage() {
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
-  const { data: rarible } = useSWR(
-    address ? ["rarible", address] : null,
-    async () => {
-      const json = await jsonFetcher<{ shortUrl: string }[]>(
-        "https://rarible.com/marketplace/api/v4/profiles/list",
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify([address]),
-        }
-      );
-      return json;
-    }
-  );
-  console.log(rarible);
   const { data: symbol } = useSWR(
     address && opensea?.schema_name === "ERC20" ? ["symbol", address] : null,
     async () => {
@@ -241,12 +226,10 @@ export default function AddressPage() {
               icon="looksrare"
               href={`https://looksrare.org/collections/${address}`}
             />
-            {rarible?.[0].shortUrl ? (
-              <ExternalLink
-                icon="rarible"
-                href={`https://rarible.com/${rarible?.[0].shortUrl}/items`}
-              />
-            ) : null}
+            <ExternalLink
+              icon="rarible"
+              href={`https://rarible.com/collection/${address}/items`}
+            />
             <ExternalLink
               icon="x2y2"
               href={`https://x2y2.io/collection/${opensea.collection.slug}/items`}
