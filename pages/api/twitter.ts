@@ -15,11 +15,11 @@ export default async function TwitterApi(
       `https://etherscan.io/token/${req.query.address}`
     );
     const text = await response.text();
-    res.setHeader("cache-control", "public, max-age=43200, immutable");
     const twitter = text.match(
       /original-title='Twitter: https:\/\/www\.twitter\.com\/([^']+)'/
     )?.[1];
     if (twitter) {
+      res.setHeader("cache-control", "public, max-age=43200, immutable");
       res.json(twitter);
       return;
     }
@@ -34,6 +34,7 @@ export default async function TwitterApi(
           .replaceAll("https://twitter.com/opensea", "")
           .match(/https:\/\/twitter\.com\/(\w+)/)?.[1];
       if (twitter2) {
+        res.setHeader("cache-control", "public, max-age=43200, immutable");
         res.json(twitter2);
         return;
       }
