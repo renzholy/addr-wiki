@@ -19,7 +19,11 @@ const headerStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address;
-
+  const { data: twitter } = useSWR<string | null>(
+    address ? `/api/twitter?address=${address}` : null,
+    jsonFetcher,
+    { revalidateOnFocus: true, shouldRetryOnError: false }
+  );
   const { data: opensea } = useSWR<{
     collection: {
       name: string;
@@ -148,7 +152,8 @@ export default function AddressPage() {
         </>
       ) : null}
 
-      {opensea?.collection.twitter_username ||
+      {twitter ||
+      opensea?.collection.twitter_username ||
       coingecko?.links.twitter_screen_name ||
       opensea?.collection.discord_url ||
       coingecko?.links.chat_url?.some((url) => url.includes("discord")) ||
@@ -160,13 +165,17 @@ export default function AddressPage() {
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Socials</h4>
           <section style={{ margin: "0 auto", width: "fit-content" }}>
-            {opensea?.collection.twitter_username ? (
+            {twitter ? (
+              <ExternalLink
+                icon="twitter"
+                href={`https://twitter.com/${twitter}`}
+              />
+            ) : opensea?.collection.twitter_username ? (
               <ExternalLink
                 icon="twitter"
                 href={`https://twitter.com/${opensea.collection.twitter_username}`}
               />
-            ) : null}
-            {coingecko?.links.twitter_screen_name ? (
+            ) : coingecko?.links.twitter_screen_name ? (
               <ExternalLink
                 icon="twitter"
                 href={`https://twitter.com/${coingecko?.links.twitter_screen_name}`}

@@ -7,7 +7,7 @@ const nextConfig = {
         source: "/icons/(.*)",
         headers: [
           {
-            key: "Cache-Control",
+            key: "cache-control",
             value: "public, max-age=43200, immutable",
           },
         ],
