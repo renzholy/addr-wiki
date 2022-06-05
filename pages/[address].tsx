@@ -25,7 +25,7 @@ export default function AddressPage() {
   const { data: twitter } = useSWR<string | null>(
     address ? `/api/twitter?address=${address}` : null,
     jsonFetcher,
-    { revalidateOnFocus: true, shouldRetryOnError: false }
+    { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const { data: opensea } = useSWR<{
     collection?: {
@@ -51,7 +51,7 @@ export default function AddressPage() {
   }>(
     address ? `https://api.opensea.io/api/v1/asset_contract/${address}` : null,
     jsonFetcher,
-    { revalidateOnFocus: true, shouldRetryOnError: false }
+    { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const { data: coingecko } = useSWR<{
     id: string;
@@ -76,7 +76,7 @@ export default function AddressPage() {
       ? `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
       : null,
     jsonFetcher,
-    { revalidateOnFocus: true, shouldRetryOnError: false }
+    { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const { data: symbol } = useSWR(
     address && opensea?.schema_name === "ERC20" ? ["symbol", address] : null,
@@ -88,7 +88,7 @@ export default function AddressPage() {
       );
       return contract.symbol();
     },
-    { revalidateOnFocus: true, shouldRetryOnError: false }
+    { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
