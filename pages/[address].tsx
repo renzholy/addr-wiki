@@ -53,7 +53,7 @@ export default function AddressPage() {
     created_date: string;
     description?: string;
     external_link?: string;
-    schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS";
+    schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS" | "UNKNOWN";
   }>(
     address ? `https://api.opensea.io/api/v1/asset_contract/${address}` : null,
     jsonFetcher,
@@ -92,7 +92,7 @@ export default function AddressPage() {
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const { data: symbol } = useSWR(
-    address && opensea?.schema_name === "ERC20" ? ["symbol", address] : null,
+    address ? ["symbol", address] : null,
     async () => {
       const contract = new Contract(
         address as string,
@@ -120,9 +120,7 @@ export default function AddressPage() {
     { revalidateOnFocus: false }
   );
   const { data: curve } = useCurve(
-    typeof address === "string" && opensea?.schema_name === "ERC20"
-      ? address
-      : undefined
+    typeof address === "string" ? address : undefined
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
@@ -239,7 +237,8 @@ export default function AddressPage() {
       >
         {coingecko?.description.en || opensea?.description}
       </p>
-      {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
+      {opensea?.collection?.slug &&
+      ["ERC721", "ERC1155", "CRYPTOPUNKS"].includes(opensea.schema_name) ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
@@ -269,7 +268,7 @@ export default function AddressPage() {
             />
           </section>
         </>
-      ) : opensea?.schema_name === "ERC20" ? (
+      ) : (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
@@ -282,7 +281,7 @@ export default function AddressPage() {
             ) : null}
           </section>
         </>
-      ) : null}
+      )}
 
       {twitter ||
       opensea?.collection?.twitter_username ||
@@ -383,7 +382,8 @@ export default function AddressPage() {
             href={`https://etherscan.deth.net/address/${address}`}
           />
         ) : null}
-        {opensea?.schema_name && opensea.schema_name !== "ERC20" ? (
+        {opensea?.schema_name &&
+        ["ERC721", "ERC1155", "CRYPTOPUNKS"].includes(opensea.schema_name) ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${address}`}
