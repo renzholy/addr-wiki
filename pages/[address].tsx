@@ -116,59 +116,81 @@ export default function AddressPage() {
         </>
       ) : null}
 
-      <h4 style={{ marginTop: 20, textAlign: "center" }}>Socials</h4>
-      <section style={{ margin: "0 auto", width: "fit-content" }}>
-        {opensea?.collection.twitter_username ? (
-          <ExternalLink
-            icon="twitter"
-            href={`https://twitter.com/${opensea.collection.twitter_username}`}
-          />
-        ) : null}
-        {coingecko?.links.twitter_screen_name ? (
-          <ExternalLink
-            icon="twitter"
-            href={`https://twitter.com/${coingecko?.links.twitter_screen_name}`}
-          />
-        ) : null}
-        {opensea?.collection.discord_url ? (
-          <ExternalLink icon="discord" href={opensea.collection.discord_url} />
-        ) : null}
-        {coingecko?.links.chat_url?.some((url) => url.includes("discord")) ? (
-          <ExternalLink
-            icon="discord"
-            href={
-              coingecko.links.chat_url.find((url) => url.includes("discord"))!
-            }
-          />
-        ) : null}
-        {coingecko?.links.facebook_username ? (
-          <ExternalLink
-            icon="facebook"
-            href={`https://www.facebook.com/${coingecko.links.facebook_username}`}
-          />
-        ) : null}
-        {opensea?.collection.instagram_username ? (
-          <ExternalLink
-            icon="instagram"
-            href={`https://www.instagram.com/${opensea.collection.instagram_username}`}
-          />
-        ) : null}
-        {coingecko?.links.subreddit_url ? (
-          <ExternalLink icon="reddit" href={coingecko?.links.subreddit_url} />
-        ) : null}
-        {coingecko?.links.telegram_channel_identifier ? (
-          <ExternalLink
-            icon="telegram"
-            href={`https://t.me/${coingecko?.links.telegram_channel_identifier}`}
-          />
-        ) : null}
-        {coingecko?.links.repos_url?.github?.length ? (
-          <ExternalLink
-            icon="github"
-            href={coingecko.links.repos_url.github[0]}
-          />
-        ) : null}
-      </section>
+      {opensea?.collection.twitter_username ||
+      coingecko?.links.twitter_screen_name ||
+      opensea?.collection.discord_url ||
+      coingecko?.links.chat_url?.some((url) => url.includes("discord")) ||
+      coingecko?.links.facebook_username ||
+      opensea?.collection.instagram_username ||
+      coingecko?.links.subreddit_url ||
+      coingecko?.links.telegram_channel_identifier ||
+      coingecko?.links.repos_url?.github?.length ? (
+        <>
+          <h4 style={{ marginTop: 20, textAlign: "center" }}>Socials</h4>
+          <section style={{ margin: "0 auto", width: "fit-content" }}>
+            {opensea?.collection.twitter_username ? (
+              <ExternalLink
+                icon="twitter"
+                href={`https://twitter.com/${opensea.collection.twitter_username}`}
+              />
+            ) : null}
+            {coingecko?.links.twitter_screen_name ? (
+              <ExternalLink
+                icon="twitter"
+                href={`https://twitter.com/${coingecko?.links.twitter_screen_name}`}
+              />
+            ) : null}
+            {opensea?.collection.discord_url ? (
+              <ExternalLink
+                icon="discord"
+                href={opensea.collection.discord_url}
+              />
+            ) : null}
+            {coingecko?.links.chat_url?.some((url) =>
+              url.includes("discord")
+            ) ? (
+              <ExternalLink
+                icon="discord"
+                href={
+                  coingecko.links.chat_url.find((url) =>
+                    url.includes("discord")
+                  )!
+                }
+              />
+            ) : null}
+            {coingecko?.links.facebook_username ? (
+              <ExternalLink
+                icon="facebook"
+                href={`https://www.facebook.com/${coingecko.links.facebook_username}`}
+              />
+            ) : null}
+            {opensea?.collection.instagram_username ? (
+              <ExternalLink
+                icon="instagram"
+                href={`https://www.instagram.com/${opensea.collection.instagram_username}`}
+              />
+            ) : null}
+            {coingecko?.links.subreddit_url ? (
+              <ExternalLink
+                icon="reddit"
+                href={coingecko?.links.subreddit_url}
+              />
+            ) : null}
+            {coingecko?.links.telegram_channel_identifier ? (
+              <ExternalLink
+                icon="telegram"
+                href={`https://t.me/${coingecko?.links.telegram_channel_identifier}`}
+              />
+            ) : null}
+            {coingecko?.links.repos_url?.github?.length ? (
+              <ExternalLink
+                icon="github"
+                href={coingecko.links.repos_url.github[0]}
+              />
+            ) : null}
+          </section>
+        </>
+      ) : null}
 
       <h4 style={{ marginTop: 20, textAlign: "center" }}>Tools</h4>
       <section style={{ margin: "0 auto", width: "fit-content" }}>
