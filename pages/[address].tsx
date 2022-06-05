@@ -25,7 +25,7 @@ export default function AddressPage() {
     { revalidateOnFocus: true, shouldRetryOnError: false }
   );
   const { data: opensea } = useSWR<{
-    collection: {
+    collection?: {
       name: string;
       slug: string;
       image_url: string;
@@ -110,7 +110,9 @@ export default function AddressPage() {
       <div style={{ margin: "20px auto", lineHeight: 0, width: "fit-content" }}>
         {opensea?.external_link ? (
           <ExternalLink
-            icon={opensea.collection.image_url.replace(/=s\d+$/, "")}
+            icon={
+              opensea.collection?.image_url.replace(/=s\d+$/, "") || "unknown"
+            }
             href={opensea.external_link}
             size={160}
           />
@@ -120,7 +122,13 @@ export default function AddressPage() {
             href={coingecko.links.homepage[0]}
             size={160}
           />
-        ) : null}
+        ) : (
+          <ExternalLink
+            icon="unknown"
+            href={`https://etherscan.io/token/${address}`}
+            size={160}
+          />
+        )}
       </div>
       <h2 style={{ textAlign: "center", marginBottom: 40 }}>
         <a
@@ -129,13 +137,13 @@ export default function AddressPage() {
           rel="noreferrer"
           style={{ color: "#f2f4f8" }}
         >
-          {coingecko?.name || opensea?.collection.name || "-"}
+          {coingecko?.name || opensea?.collection?.name || "Unknown Token"}
         </a>
       </h2>
       <p style={{ margin: "0 20px", textAlign: "center", color: "#a2a9b0" }}>
         {opensea?.description}
       </p>
-      {opensea?.collection.slug && opensea.schema_name !== "ERC20" ? (
+      {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
         <>
           <h4 style={{ marginTop: 40, textAlign: "center" }}>Markets</h4>
           <section
@@ -171,12 +179,12 @@ export default function AddressPage() {
       ) : null}
 
       {twitter ||
-      opensea?.collection.twitter_username ||
+      opensea?.collection?.twitter_username ||
       coingecko?.links.twitter_screen_name ||
-      opensea?.collection.discord_url ||
+      opensea?.collection?.discord_url ||
       coingecko?.links.chat_url?.some((url) => url.includes("discord")) ||
       coingecko?.links.facebook_username ||
-      opensea?.collection.instagram_username ||
+      opensea?.collection?.instagram_username ||
       coingecko?.links.subreddit_url ||
       coingecko?.links.telegram_channel_identifier ||
       coingecko?.links.repos_url?.github?.length ? (
@@ -195,7 +203,7 @@ export default function AddressPage() {
                 icon="twitter"
                 href={`https://twitter.com/${twitter}`}
               />
-            ) : opensea?.collection.twitter_username ? (
+            ) : opensea?.collection?.twitter_username ? (
               <ExternalLink
                 icon="twitter"
                 href={`https://twitter.com/${opensea.collection.twitter_username}`}
@@ -206,7 +214,7 @@ export default function AddressPage() {
                 href={`https://twitter.com/${coingecko?.links.twitter_screen_name}`}
               />
             ) : null}
-            {opensea?.collection.discord_url ? (
+            {opensea?.collection?.discord_url ? (
               <ExternalLink
                 icon="discord"
                 href={opensea.collection.discord_url}
@@ -229,7 +237,7 @@ export default function AddressPage() {
                 href={`https://www.facebook.com/${coingecko.links.facebook_username}`}
               />
             ) : null}
-            {opensea?.collection.instagram_username ? (
+            {opensea?.collection?.instagram_username ? (
               <ExternalLink
                 icon="instagram"
                 href={`https://www.instagram.com/${opensea.collection.instagram_username}`}
@@ -276,7 +284,7 @@ export default function AddressPage() {
             href={`https://www.coingecko.com/coins/${coingecko.id}`}
           />
         ) : null}
-        {opensea?.collection.slug && opensea.schema_name !== "ERC20" ? (
+        {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${opensea.collection.slug}`}
