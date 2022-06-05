@@ -163,8 +163,8 @@ export default function AddressPage() {
             <BlueMark
               style={{
                 position: "absolute",
-                bottom: 10,
-                right: 10,
+                bottom: 0,
+                right: 0,
                 width: 40,
                 height: 40,
               }}
