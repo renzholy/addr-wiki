@@ -148,6 +148,10 @@ export default function AddressPage() {
               icon="gem"
               href={`https://gem.xyz/collection/${opensea.collection.slug}`}
             />
+            <ExternalLink
+              icon="genie"
+              href={`https://www.genie.xyz/collection/${address}`}
+            />
           </section>
         </>
       ) : null}
