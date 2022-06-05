@@ -148,7 +148,10 @@ export default function AddressPage() {
               />
             ) : (
               <ExternalLink
-                icon="unknown"
+                icon={
+                  opensea?.collection?.image_url.replace(/=s\d+$/, "") ||
+                  "unknown"
+                }
                 href={`https://etherscan.io/token/${address}`}
                 size={160}
               />
