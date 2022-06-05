@@ -232,11 +232,11 @@ export default function AddressPage() {
             />
             <ExternalLink
               icon="x2y2"
-              href={`https://x2y2.io/collection/${opensea.collection.slug}/items`}
+              href={`https://x2y2.io/collection/${address}/items`}
             />
             <ExternalLink
               icon="gem"
-              href={`https://gem.xyz/collection/${opensea.collection.slug}`}
+              href={`https://gem.xyz/collection/${address}`}
             />
             <ExternalLink
               icon="genie"
