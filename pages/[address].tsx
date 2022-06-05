@@ -171,7 +171,7 @@ export default function AddressPage() {
           ) : null}
         </div>
       </div>
-      <h2 style={{ textAlign: "center", marginBottom: 40 }}>
+      <h2 style={{ textAlign: "center", marginBottom: 20 }}>
         <a
           href={
             opensea?.external_link ||
@@ -216,6 +216,7 @@ export default function AddressPage() {
               width: "fit-content",
               padding: "0 20px",
               textAlign: "center",
+              lineHeight: 0,
             }}
           >
             <ExternalLink
@@ -264,6 +265,7 @@ export default function AddressPage() {
               width: "fit-content",
               padding: "0 20px",
               textAlign: "center",
+              lineHeight: 0,
             }}
           >
             {twitter ? (
@@ -340,6 +342,7 @@ export default function AddressPage() {
           width: "fit-content",
           padding: "0 20px",
           textAlign: "center",
+          lineHeight: 0,
         }}
       >
         <ExternalLink
