@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { Contract, providers } from "ethers";
 import { getAddress, Interface, isAddress } from "ethers/lib/utils";
+import { truncate } from "lodash-es";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -128,34 +131,33 @@ export default function AddressPage() {
           ADDR<span style={{ color: "#878d96" }}>·</span>WIKI
         </header>
       )}
-      <div style={{ margin: "20px auto", lineHeight: 0, width: "fit-content" }}>
-        <div style={{ position: "relative", width: 180, height: 180 }}>
+      <div style={{ margin: "40px auto", lineHeight: 0, width: "fit-content" }}>
+        <div style={{ position: "relative", width: 160, height: 160 }}>
           <div style={{ position: "absolute" }}>
-            {opensea?.external_link ? (
-              <ExternalLink
-                icon={
-                  opensea.collection?.image_url.replace(/=s\d+$/, "") ||
-                  "unknown"
-                }
-                href={opensea.external_link}
-                size={160}
-              />
-            ) : coingecko?.links.homepage.length ? (
-              <ExternalLink
-                icon={coingecko.image.large}
-                href={coingecko.links.homepage[0]}
-                size={160}
-              />
-            ) : (
-              <ExternalLink
-                icon={
+            <a
+              href={
+                opensea?.external_link ||
+                coingecko?.links.homepage[0] ||
+                `https://etherscan.io/token/${address}`
+              }
+            >
+              <img
+                src={
                   opensea?.collection?.image_url.replace(/=s\d+$/, "") ||
-                  "unknown"
+                  coingecko?.image.large ||
+                  "/icons/unknown.svg"
                 }
-                href={`https://etherscan.io/token/${address}`}
-                size={160}
+                alt="logo"
+                width={160}
+                height={160}
+                style={{
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  width: 160,
+                  height: 160,
+                }}
               />
-            )}
+            </a>
           </div>
           {opensea?.collection?.safelist_request_status === "verified" ? (
             <BlueMark
@@ -190,15 +192,19 @@ export default function AddressPage() {
       <p
         style={{
           margin: "0 auto",
+          width: "100%",
           marginBottom: 40,
           padding: "0 20px",
           textAlign: "center",
           color: "#a2a9b0",
           maxWidth: 600,
           fontSize: "0.9em",
+          overflow: "hidden",
         }}
       >
-        {coingecko?.description.en || opensea?.description}
+        {truncate(coingecko?.description.en || opensea?.description, {
+          length: 256,
+        })}
       </p>
       {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
         <>

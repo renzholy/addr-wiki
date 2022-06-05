@@ -25,7 +25,7 @@ export default function ExternalLink(props: {
         height={size}
         style={{
           borderRadius: "50%",
-          objectFit: "contain",
+          objectFit: "cover",
           width: size,
           height: size,
         }}
