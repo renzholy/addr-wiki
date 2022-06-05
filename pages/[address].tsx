@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import useSWR from "swr";
+import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
 import { jsonFetcher } from "../utils/fetcher";
 
@@ -36,6 +37,11 @@ export default function AddressPage() {
       twitter_username?: string;
       wiki_url?: string;
       dev_seller_fee_basis_points: string;
+      safelist_request_status:
+        | "verified"
+        | "approved"
+        | "requested"
+        | "not_requested";
     };
     created_date: string;
     description?: string;
@@ -122,27 +128,43 @@ export default function AddressPage() {
         </header>
       )}
       <div style={{ margin: "20px auto", lineHeight: 0, width: "fit-content" }}>
-        {opensea?.external_link ? (
-          <ExternalLink
-            icon={
-              opensea.collection?.image_url.replace(/=s\d+$/, "") || "unknown"
-            }
-            href={opensea.external_link}
-            size={160}
-          />
-        ) : coingecko?.links.homepage.length ? (
-          <ExternalLink
-            icon={coingecko.image.large}
-            href={coingecko.links.homepage[0]}
-            size={160}
-          />
-        ) : (
-          <ExternalLink
-            icon="unknown"
-            href={`https://etherscan.io/token/${address}`}
-            size={160}
-          />
-        )}
+        <div style={{ position: "relative", width: 180, height: 180 }}>
+          <div style={{ position: "absolute" }}>
+            {opensea?.external_link ? (
+              <ExternalLink
+                icon={
+                  opensea.collection?.image_url.replace(/=s\d+$/, "") ||
+                  "unknown"
+                }
+                href={opensea.external_link}
+                size={160}
+              />
+            ) : coingecko?.links.homepage.length ? (
+              <ExternalLink
+                icon={coingecko.image.large}
+                href={coingecko.links.homepage[0]}
+                size={160}
+              />
+            ) : (
+              <ExternalLink
+                icon="unknown"
+                href={`https://etherscan.io/token/${address}`}
+                size={160}
+              />
+            )}
+          </div>
+          {opensea?.collection?.safelist_request_status === "verified" ? (
+            <BlueMark
+              style={{
+                position: "absolute",
+                bottom: 10,
+                right: 10,
+                width: 40,
+                height: 40,
+              }}
+            />
+          ) : null}
+        </div>
       </div>
       <h2 style={{ textAlign: "center", marginBottom: 40 }}>
         <a
@@ -328,7 +350,9 @@ export default function AddressPage() {
           />
         ) : null}
       </section>
-      <footer style={{ height: "env(safe-area-inset-bottom)" }} />
+      <footer
+        style={{ height: "calc(env(safe-area-inset-bottom, 0) + 40px)" }}
+      />
     </>
   );
 }
