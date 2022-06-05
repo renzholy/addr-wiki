@@ -238,7 +238,7 @@ export default function AddressPage() {
         {coingecko?.description.en || opensea?.description}
       </p>
       {opensea?.collection?.slug &&
-      ["ERC721", "ERC1155", "CRYPTOPUNKS"].includes(opensea.schema_name) ? (
+      ["ERC721", "ERC1155"].includes(opensea.schema_name) ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
@@ -266,6 +266,13 @@ export default function AddressPage() {
               icon="genie"
               href={`https://www.genie.xyz/collection/${address}`}
             />
+          </section>
+        </>
+      ) : opensea?.schema_name === "CRYPTOPUNKS" ? (
+        <>
+          <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
+          <section style={sectionStyle}>
+            <ExternalLink icon="larvalabs" href="https://cryptopunks.app/" />
           </section>
         </>
       ) : (
@@ -383,7 +390,7 @@ export default function AddressPage() {
           />
         ) : null}
         {opensea?.schema_name &&
-        ["ERC721", "ERC1155", "CRYPTOPUNKS"].includes(opensea.schema_name) ? (
+        ["ERC721", "ERC1155"].includes(opensea.schema_name) ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${address}`}
