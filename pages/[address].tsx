@@ -92,6 +92,22 @@ export default function AddressPage() {
     },
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
+  const { data: etherscan } = useSWR(
+    address
+      ? `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}`
+      : null,
+    async (url) => {
+      const json = await jsonFetcher<
+        | { status: "0"; result: string }
+        | { status: "1"; result: { SourceCode?: string }[] }
+      >(url);
+      if (json.status === "0") {
+        throw new Error(json.result);
+      }
+      return json;
+    },
+    { revalidateOnFocus: false }
+  );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) {
@@ -353,6 +369,13 @@ export default function AddressPage() {
           <ExternalLink
             icon="coingecko"
             href={`https://www.coingecko.com/coins/${coingecko.id}`}
+          />
+        ) : null}
+        {Array.isArray(etherscan?.result) &&
+        etherscan?.result.filter(({ SourceCode }) => SourceCode).length ? (
+          <ExternalLink
+            icon="vscode"
+            href={`https://etherscan.deth.net/address/${address}`}
           />
         ) : null}
         {opensea?.schema_name !== "ERC20" ? (
