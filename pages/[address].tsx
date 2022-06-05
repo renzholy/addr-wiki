@@ -249,10 +249,16 @@ export default function AddressPage() {
             href={`https://www.coingecko.com/coins/${coingecko.id}`}
           />
         ) : null}
-        {opensea?.collection.slug ? (
+        {opensea?.collection.slug && opensea.schema_name !== "ERC20" ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${opensea.collection.slug}`}
+          />
+        ) : null}
+        {opensea?.schema_name === "ERC20" ? (
+          <ExternalLink
+            icon="uniswap"
+            href={`https://info.uniswap.org/#/tokens/${address}`}
           />
         ) : null}
       </section>
