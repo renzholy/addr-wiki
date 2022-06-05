@@ -120,7 +120,9 @@ export default function AddressPage() {
     { revalidateOnFocus: false }
   );
   const { data: curve } = useCurve(
-    typeof address === "string" ? address : undefined
+    typeof address === "string" && opensea?.schema_name === "ERC20"
+      ? address
+      : undefined
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
