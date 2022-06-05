@@ -123,7 +123,14 @@ export default function AddressPage() {
         ) : null}
       </div>
       <h2 style={{ textAlign: "center", marginBottom: 40 }}>
-        {coingecko?.name || opensea?.collection.name || "-"}
+        <a
+          href={opensea?.external_link || coingecko?.links.homepage?.[0]}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "#f2f4f8" }}
+        >
+          {coingecko?.name || opensea?.collection.name || "-"}
+        </a>
       </h2>
       <p style={{ margin: 20, textAlign: "center", color: "#a2a9b0" }}>
         {opensea?.description}
@@ -190,10 +197,9 @@ export default function AddressPage() {
                 icon="discord"
                 href={opensea.collection.discord_url}
               />
-            ) : null}
-            {coingecko?.links.chat_url?.some((url) =>
-              url.includes("discord")
-            ) ? (
+            ) : coingecko?.links.chat_url?.some((url) =>
+                url.includes("discord")
+              ) ? (
               <ExternalLink
                 icon="discord"
                 href={
