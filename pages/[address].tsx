@@ -217,6 +217,10 @@ export default function AddressPage() {
               href={`https://looksrare.org/collections/${address}`}
             />
             <ExternalLink
+              icon="rarible"
+              href={`https://rarible.com/${opensea.collection.slug}/items`}
+            />
+            <ExternalLink
               icon="x2y2"
               href={`https://x2y2.io/collection/${opensea.collection.slug}/items`}
             />
