@@ -1,4 +1,5 @@
-import { getAddress, isAddress } from "ethers/lib/utils";
+import { Contract, providers } from "ethers";
+import { getAddress, Interface, isAddress } from "ethers/lib/utils";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -69,6 +70,18 @@ export default function AddressPage() {
     jsonFetcher,
     { revalidateOnFocus: true, shouldRetryOnError: false }
   );
+  const { data: symbol } = useSWR(
+    address && opensea?.schema_name === "ERC20" ? ["symbol", address] : null,
+    async () => {
+      const contract = new Contract(
+        address as string,
+        new Interface(["function symbol() public view returns (string)"]),
+        new providers.CloudflareProvider(1)
+      );
+      return contract.symbol();
+    },
+    { revalidateOnFocus: true, shouldRetryOnError: false }
+  );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) {
@@ -132,12 +145,19 @@ export default function AddressPage() {
       </div>
       <h2 style={{ textAlign: "center", marginBottom: 40 }}>
         <a
-          href={opensea?.external_link || coingecko?.links.homepage?.[0]}
+          href={
+            opensea?.external_link ||
+            coingecko?.links.homepage?.[0] ||
+            `https://etherscan.io/token/${address}`
+          }
           target="_blank"
           rel="noreferrer"
           style={{ color: "#f2f4f8" }}
         >
-          {coingecko?.name || opensea?.collection?.name || "Unknown Token"}
+          {coingecko?.name ||
+            opensea?.collection?.name ||
+            symbol ||
+            "Unknown Token"}
         </a>
       </h2>
       <p style={{ margin: "0 20px", textAlign: "center", color: "#a2a9b0" }}>
