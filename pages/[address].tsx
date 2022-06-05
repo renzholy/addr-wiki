@@ -328,6 +328,7 @@ export default function AddressPage() {
           />
         ) : null}
       </section>
+      <footer style={{ height: "env(safe-area-inset-bottom)" }} />
     </>
   );
 }
