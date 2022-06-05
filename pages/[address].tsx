@@ -2,7 +2,6 @@
 
 import { Contract, providers } from "ethers";
 import { getAddress, Interface, isAddress } from "ethers/lib/utils";
-import { truncate } from "lodash-es";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -199,12 +198,14 @@ export default function AddressPage() {
           color: "#a2a9b0",
           maxWidth: 600,
           fontSize: "0.9em",
+          display: "-webkit-box",
           overflow: "hidden",
+          textOverflow: "ellipsis",
+          WebkitLineClamp: 5,
+          WebkitBoxOrient: "vertical",
         }}
       >
-        {truncate(coingecko?.description.en || opensea?.description, {
-          length: 256,
-        })}
+        {coingecko?.description.en || opensea?.description}
       </p>
       {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
         <>
