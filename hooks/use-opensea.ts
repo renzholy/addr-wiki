@@ -6,7 +6,7 @@ export default function useOpensea(address?: string) {
     collection?: {
       name: string;
       slug: string;
-      image_url: string;
+      image_url?: string;
       instagram_username?: string;
       discord_url?: string;
       medium_username?: string;

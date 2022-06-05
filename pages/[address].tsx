@@ -102,7 +102,7 @@ export default function AddressPage() {
             >
               <img
                 src={
-                  opensea?.collection?.image_url.replace(/=s\d+$/, "") ||
+                  opensea?.collection?.image_url?.replace(/=s\d+$/, "") ||
                   coingecko?.image.large ||
                   "/icons/unknown.svg"
                 }
