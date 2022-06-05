@@ -168,6 +168,7 @@ export default function AddressPage() {
                 width={160}
                 height={160}
                 style={{
+                  background: "#21262a",
                   borderRadius: "50%",
                   objectFit: "cover",
                   width: 160,
