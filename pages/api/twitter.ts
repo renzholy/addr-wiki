@@ -16,11 +16,29 @@ export default async function TwitterApi(
     );
     const text = await response.text();
     res.setHeader("cache-control", "public, max-age=43200, immutable");
-    res.json(
-      text.match(
-        /original-title='Twitter: https:\/\/www\.twitter\.com\/([^']+)'/
-      )?.[1]
-    );
+    const twitter = text.match(
+      /original-title='Twitter: https:\/\/www\.twitter\.com\/([^']+)'/
+    )?.[1];
+    if (twitter) {
+      res.json(twitter);
+      return;
+    }
+    if (typeof req.query.slug === "string") {
+      const response2 = await fetch(
+        `http://47.56.71.87:18081/os/collection/${req.query.slug}?apikey=b894b8ea76e5a03c558dc5d1`
+      );
+      const text2 = await response2.text();
+      const twitter2 =
+        text2.match(/"connectedTwitterUsername":"([^"]+)"/)?.[1] ||
+        text2
+          .replaceAll("https://twitter.com/opensea", "")
+          .match(/https:\/\/twitter\.com\/(\w+)/)?.[1];
+      if (twitter2) {
+        res.json(twitter2);
+        return;
+      }
+    }
+    res.json(null);
   } catch {
     res.status(500).send("parse error");
   }

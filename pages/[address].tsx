@@ -24,11 +24,6 @@ const headerStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address;
-  const { data: twitter } = useSWR<string | null>(
-    address ? `/api/twitter?address=${address}` : null,
-    jsonFetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false }
-  );
   const { data: opensea } = useSWR<{
     collection?: {
       name: string;
@@ -52,6 +47,13 @@ export default function AddressPage() {
     schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS";
   }>(
     address ? `https://api.opensea.io/api/v1/asset_contract/${address}` : null,
+    jsonFetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false }
+  );
+  const { data: twitter } = useSWR<string | null>(
+    address && opensea?.collection?.slug && !opensea.collection.twitter_username
+      ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
+      : null,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
