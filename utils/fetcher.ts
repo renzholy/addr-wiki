@@ -1,5 +1,8 @@
-export async function jsonFetcher<T>(url: string): Promise<T> {
-  const response = await fetch(url);
+export async function jsonFetcher<T>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<T> {
+  const response = await fetch(input, init);
   if (response.ok) {
     return response.json();
   }
