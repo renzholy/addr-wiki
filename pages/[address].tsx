@@ -352,10 +352,10 @@ export default function AddressPage() {
             href={`https://www.coingecko.com/coins/${coingecko.id}`}
           />
         ) : null}
-        {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
+        {opensea?.schema_name !== "ERC20" ? (
           <ExternalLink
             icon="traitsniper"
-            href={`https://app.traitsniper.com/${opensea.collection.slug}`}
+            href={`https://app.traitsniper.com/${address}`}
           />
         ) : null}
         {opensea?.schema_name === "ERC20" ? (
