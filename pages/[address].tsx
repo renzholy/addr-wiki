@@ -160,7 +160,15 @@ export default function AddressPage() {
             "Unknown Token"}
         </a>
       </h2>
-      <p style={{ margin: "0 20px", textAlign: "center", color: "#a2a9b0" }}>
+      <p
+        style={{
+          margin: "0 auto",
+          padding: "0 20px",
+          textAlign: "center",
+          color: "#a2a9b0",
+          maxWidth: 600,
+        }}
+      >
         {opensea?.description}
       </p>
       {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
