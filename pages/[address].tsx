@@ -95,7 +95,7 @@ export default function AddressPage() {
               cursor: "pointer",
             }}
           >
-            {copied ? "COPIED!" : getAddress(address)}
+            {copied ? "Copied!" : getAddress(address)}
           </header>
         </CopyToClipboard>
       ) : (
