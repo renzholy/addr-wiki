@@ -9,6 +9,7 @@ import useSWR from "swr";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
 import useCurve from "../hooks/use-curve";
+import useEtherscan from "../hooks/use-etherscan";
 import { jsonFetcher } from "../utils/fetcher";
 
 const headerStyle: CSSProperties = {
@@ -32,7 +33,7 @@ const sectionStyle: CSSProperties = {
 
 export default function AddressPage() {
   const router = useRouter();
-  const address = router.query.address;
+  const address = router.query.address as string | undefined;
   const { data: opensea } = useSWR<{
     collection?: {
       name: string;
@@ -103,26 +104,9 @@ export default function AddressPage() {
     },
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
-  const { data: etherscan } = useSWR(
-    address
-      ? `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}`
-      : null,
-    async (url) => {
-      const json = await jsonFetcher<
-        | { status: "0"; result: string }
-        | { status: "1"; result: { SourceCode?: string }[] }
-      >(url);
-      if (json.status === "0") {
-        throw new Error(json.result);
-      }
-      return json;
-    },
-    { revalidateOnFocus: false }
-  );
+  const { data: etherscan } = useEtherscan(address);
   const { data: curve } = useCurve(
-    typeof address === "string" && opensea?.schema_name === "ERC20"
-      ? address
-      : undefined
+    address && opensea?.schema_name === "ERC20" ? address : undefined
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
@@ -142,7 +126,7 @@ export default function AddressPage() {
   }
   return (
     <>
-      {typeof address === "string" && isAddress(address) ? (
+      {address && isAddress(address) ? (
         <CopyToClipboard
           text={getAddress(address)}
           onCopy={() => setCopied(true)}
