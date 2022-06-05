@@ -21,6 +21,14 @@ const headerStyle: CSSProperties = {
   justifyContent: "center",
 };
 
+const sectionStyle: CSSProperties = {
+  margin: "0 auto",
+  width: "fit-content",
+  padding: "0 20px",
+  textAlign: "center",
+  lineHeight: 0,
+};
+
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address;
@@ -192,7 +200,7 @@ export default function AddressPage() {
           ) : null}
         </div>
       </div>
-      <h2 style={{ textAlign: "center", marginBottom: 20 }}>
+      <h3 style={{ textAlign: "center", marginBottom: 20 }}>
         <a
           href={
             opensea?.external_link ||
@@ -205,7 +213,7 @@ export default function AddressPage() {
         >
           {coingecko?.name || opensea?.collection?.name || symbol || "Unknown"}
         </a>
-      </h2>
+      </h3>
       <p
         style={{
           margin: "0 auto",
@@ -228,15 +236,7 @@ export default function AddressPage() {
       {opensea?.collection?.slug && opensea.schema_name !== "ERC20" ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
-          <section
-            style={{
-              margin: "10px auto",
-              width: "fit-content",
-              padding: "0 20px",
-              textAlign: "center",
-              lineHeight: 0,
-            }}
-          >
+          <section style={sectionStyle}>
             <ExternalLink
               icon="opensea"
               href={`https://opensea.io/collection/${opensea.collection.slug}`}
@@ -263,6 +263,16 @@ export default function AddressPage() {
             />
           </section>
         </>
+      ) : opensea?.schema_name === "ERC20" ? (
+        <>
+          <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
+          <section style={sectionStyle}>
+            <ExternalLink
+              icon="uniswap"
+              href={`https://info.uniswap.org/#/tokens/${address}`}
+            />
+          </section>
+        </>
       ) : null}
 
       {twitter ||
@@ -277,15 +287,7 @@ export default function AddressPage() {
       coingecko?.links.repos_url?.github?.length ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Socials</h4>
-          <section
-            style={{
-              margin: "10px auto",
-              width: "fit-content",
-              padding: "0 20px",
-              textAlign: "center",
-              lineHeight: 0,
-            }}
-          >
+          <section style={sectionStyle}>
             {twitter ? (
               <ExternalLink
                 icon="twitter"
@@ -354,15 +356,7 @@ export default function AddressPage() {
       ) : null}
 
       <h4 style={{ marginTop: 20, textAlign: "center" }}>Tools</h4>
-      <section
-        style={{
-          margin: "10px auto",
-          width: "fit-content",
-          padding: "0 20px",
-          textAlign: "center",
-          lineHeight: 0,
-        }}
-      >
+      <section style={sectionStyle}>
         <ExternalLink
           icon="etherscan"
           href={`https://etherscan.io/address/${address}`}
@@ -384,12 +378,6 @@ export default function AddressPage() {
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${address}`}
-          />
-        ) : null}
-        {opensea?.schema_name === "ERC20" ? (
-          <ExternalLink
-            icon="uniswap"
-            href={`https://info.uniswap.org/#/tokens/${address}`}
           />
         ) : null}
       </section>
