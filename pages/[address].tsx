@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { Contract, providers } from "ethers";
-import { getAddress, Interface, isAddress } from "ethers/lib/utils";
+import { getAddress, isAddress } from "ethers/lib/utils";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -12,6 +11,7 @@ import useCoingecko from "../hooks/use-coingecko";
 import useCurve from "../hooks/use-curve";
 import useEtherscan from "../hooks/use-etherscan";
 import useOpensea from "../hooks/use-opensea";
+import useSymbol from "../hooks/use-symbol";
 import { jsonFetcher } from "../utils/fetcher";
 
 const headerStyle: CSSProperties = {
@@ -45,18 +45,7 @@ export default function AddressPage() {
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
   const { data: coingecko } = useCoingecko(address);
-  const { data: symbol } = useSWR(
-    address ? ["symbol", address] : null,
-    async () => {
-      const contract = new Contract(
-        address as string,
-        new Interface(["function symbol() public view returns (string)"]),
-        new providers.CloudflareProvider(1)
-      );
-      return contract.symbol();
-    },
-    { revalidateOnFocus: false, shouldRetryOnError: false }
-  );
+  const { data: symbol } = useSymbol(address);
   const { data: etherscan } = useEtherscan(address);
   const { data: curve } = useCurve(
     address && opensea?.schema_name === "ERC20" ? address : undefined
