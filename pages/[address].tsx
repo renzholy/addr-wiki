@@ -275,7 +275,7 @@ export default function AddressPage() {
             <ExternalLink icon="larvalabs" href="https://cryptopunks.app/" />
           </section>
         </>
-      ) : (
+      ) : opensea?.schema_name === "ERC20" ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
@@ -288,7 +288,7 @@ export default function AddressPage() {
             ) : null}
           </section>
         </>
-      )}
+      ) : null}
 
       {twitter ||
       opensea?.collection?.twitter_username ||
