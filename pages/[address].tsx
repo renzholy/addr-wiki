@@ -132,7 +132,7 @@ export default function AddressPage() {
           {coingecko?.name || opensea?.collection.name || "-"}
         </a>
       </h2>
-      <p style={{ margin: 20, textAlign: "center", color: "#a2a9b0" }}>
+      <p style={{ margin: "0 20px", textAlign: "center", color: "#a2a9b0" }}>
         {opensea?.description}
       </p>
       {opensea?.collection.slug && opensea.schema_name !== "ERC20" ? (
