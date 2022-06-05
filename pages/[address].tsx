@@ -155,8 +155,10 @@ export default function AddressPage() {
               href={
                 opensea?.external_link ||
                 coingecko?.links.homepage[0] ||
-                `https://etherscan.io/token/${address}`
+                `https://etherscan.io/address/${address}`
               }
+              target="_blank"
+              rel="noreferrer"
             >
               <img
                 src={
@@ -195,16 +197,13 @@ export default function AddressPage() {
           href={
             opensea?.external_link ||
             coingecko?.links.homepage?.[0] ||
-            `https://etherscan.io/token/${address}`
+            `https://etherscan.io/address/${address}`
           }
           target="_blank"
           rel="noreferrer"
           style={{ color: "#f2f4f8" }}
         >
-          {coingecko?.name ||
-            opensea?.collection?.name ||
-            symbol ||
-            "Unknown Token"}
+          {coingecko?.name || opensea?.collection?.name || symbol || "Unknown"}
         </a>
       </h2>
       <p
@@ -381,7 +380,7 @@ export default function AddressPage() {
             href={`https://etherscan.deth.net/address/${address}`}
           />
         ) : null}
-        {opensea?.schema_name !== "ERC20" ? (
+        {opensea?.schema_name && opensea.schema_name !== "ERC20" ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${address}`}
