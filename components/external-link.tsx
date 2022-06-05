@@ -1,12 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 
-export default function ExternalLink(props: { icon: string; href: string }) {
+export default function ExternalLink(props: {
+  icon: string;
+  href: string;
+  size?: number;
+}) {
+  const size = props.size || 60;
+
   return (
     <a
       href={props.href}
       target="_blank"
       rel="noreferrer"
-      style={{ display: "block", margin: 3 }}
+      style={{ display: "inline-block", margin: 10 }}
     >
       <img
         src={
@@ -15,13 +21,13 @@ export default function ExternalLink(props: { icon: string; href: string }) {
             : `/icons/${props.icon}.svg`
         }
         alt={props.icon}
-        width={64}
-        height={64}
+        width={size}
+        height={size}
         style={{
           borderRadius: "50%",
           objectFit: "contain",
-          width: 64,
-          height: 64,
+          width: size,
+          height: size,
         }}
       />
     </a>
