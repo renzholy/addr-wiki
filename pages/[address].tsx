@@ -10,6 +10,7 @@ import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
 import useCurve from "../hooks/use-curve";
 import useEtherscan from "../hooks/use-etherscan";
+import useOpensea from "../hooks/use-opensea";
 import { jsonFetcher } from "../utils/fetcher";
 
 const headerStyle: CSSProperties = {
@@ -34,32 +35,7 @@ const sectionStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address as string | undefined;
-  const { data: opensea } = useSWR<{
-    collection?: {
-      name: string;
-      slug: string;
-      image_url: string;
-      instagram_username?: string;
-      discord_url?: string;
-      medium_username?: string;
-      twitter_username?: string;
-      wiki_url?: string;
-      dev_seller_fee_basis_points: string;
-      safelist_request_status:
-        | "verified"
-        | "approved"
-        | "requested"
-        | "not_requested";
-    };
-    created_date: string;
-    description?: string;
-    external_link?: string;
-    schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS" | "UNKNOWN";
-  }>(
-    address ? `https://api.opensea.io/api/v1/asset_contract/${address}` : null,
-    jsonFetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false }
-  );
+  const { data: opensea } = useOpensea(address);
   const { data: twitter } = useSWR<string | null>(
     address && opensea?.collection?.slug && !opensea.collection.twitter_username
       ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
