@@ -138,7 +138,14 @@ export default function AddressPage() {
       {opensea?.collection.slug && opensea.schema_name !== "ERC20" ? (
         <>
           <h4 style={{ marginTop: 40, textAlign: "center" }}>Markets</h4>
-          <section style={{ margin: "0 auto", width: "fit-content" }}>
+          <section
+            style={{
+              margin: "10px auto",
+              width: "fit-content",
+              padding: "0 20px",
+              textAlign: "center",
+            }}
+          >
             <ExternalLink
               icon="opensea"
               href={`https://opensea.io/collection/${opensea.collection.slug}`}
@@ -175,7 +182,14 @@ export default function AddressPage() {
       coingecko?.links.repos_url?.github?.length ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Socials</h4>
-          <section style={{ margin: "0 auto", width: "fit-content" }}>
+          <section
+            style={{
+              margin: "10px auto",
+              width: "fit-content",
+              padding: "0 20px",
+              textAlign: "center",
+            }}
+          >
             {twitter ? (
               <ExternalLink
                 icon="twitter"
@@ -244,7 +258,14 @@ export default function AddressPage() {
       ) : null}
 
       <h4 style={{ marginTop: 20, textAlign: "center" }}>Tools</h4>
-      <section style={{ margin: "0 auto", width: "fit-content" }}>
+      <section
+        style={{
+          margin: "10px auto",
+          width: "fit-content",
+          padding: "0 20px",
+          textAlign: "center",
+        }}
+      >
         <ExternalLink
           icon="etherscan"
           href={`https://etherscan.io/address/${address}`}
