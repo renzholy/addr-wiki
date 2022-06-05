@@ -1,7 +1,20 @@
+import { getAddress, isAddress } from "ethers/lib/utils";
 import { useRouter } from "next/router";
+import { CSSProperties, useEffect, useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 import useSWR from "swr";
 import ExternalLink from "../components/external-link";
 import { jsonFetcher } from "../utils/fetcher";
+
+const headerStyle: CSSProperties = {
+  position: "sticky",
+  top: 0,
+  background: "#21262a",
+  height: 40,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 export default function AddressPage() {
   const router = useRouter();
@@ -52,25 +65,44 @@ export default function AddressPage() {
     jsonFetcher,
     { revalidateOnFocus: true, shouldRetryOnError: false }
   );
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copied]);
 
   if (!address) {
     return null;
   }
   return (
     <>
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          background: "#21262a",
-          height: 40,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        ADDR<span style={{ color: "#878d96" }}>·</span>WIKI
-      </header>
+      {typeof address === "string" && isAddress(address) ? (
+        <CopyToClipboard
+          text={getAddress(address)}
+          onCopy={() => setCopied(true)}
+        >
+          <header
+            onClick={() => {}}
+            style={{
+              ...headerStyle,
+              cursor: "pointer",
+            }}
+          >
+            {copied ? "COPIED!" : getAddress(address)}
+          </header>
+        </CopyToClipboard>
+      ) : (
+        <header style={headerStyle}>
+          ADDR<span style={{ color: "#878d96" }}>·</span>WIKI
+        </header>
+      )}
       <div style={{ margin: "20px auto", lineHeight: 0, width: "fit-content" }}>
         {opensea?.external_link ? (
           <ExternalLink
@@ -86,7 +118,7 @@ export default function AddressPage() {
           />
         ) : null}
       </div>
-      <h2 style={{ textAlign: "center" }}>
+      <h2 style={{ textAlign: "center", marginBottom: 40 }}>
         {coingecko?.name || opensea?.collection.name || "-"}
       </h2>
       <p style={{ margin: 20, textAlign: "center", color: "#a2a9b0" }}>
@@ -211,24 +243,6 @@ export default function AddressPage() {
           />
         ) : null}
       </section>
-      <footer
-        style={{
-          position: "sticky",
-          bottom: 0,
-          marginTop: 40,
-          background: "#21262a",
-          height: 40,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        ERC
-        <span style={{ color: "#878d96" }}>·</span>
-        {!opensea || opensea?.schema_name === "CRYPTOPUNKS"
-          ? null
-          : opensea.schema_name.replace("ERC", "")}
-      </footer>
     </>
   );
 }

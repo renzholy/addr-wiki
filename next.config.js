@@ -4,7 +4,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/icons/.*",
+        source: "/icons/(.*)",
         headers: [
           {
             key: "Cache-Control",

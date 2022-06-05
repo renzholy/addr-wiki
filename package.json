@@ -12,12 +12,14 @@
     "ethers": "^5.6.8",
     "next": "^12.1.6",
     "react": "^18.1.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.1.0",
     "swr": "^1.3.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.39",
     "@types/react": "^18.0.10",
+    "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.5",
     "eslint": "^8.16.0",
     "eslint-config-next": "^12.1.6",
