@@ -9,6 +9,7 @@ import ExternalLink from "../components/external-link";
 import { jsonFetcher } from "../utils/fetcher";
 
 const headerStyle: CSSProperties = {
+  zIndex: 1000,
   position: "sticky",
   top: 0,
   background: "#21262a",
