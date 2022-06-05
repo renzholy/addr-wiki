@@ -8,6 +8,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import useSWR from "swr";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
+import useCoingecko from "../hooks/use-coingecko";
 import useCurve from "../hooks/use-curve";
 import useEtherscan from "../hooks/use-etherscan";
 import useOpensea from "../hooks/use-opensea";
@@ -43,31 +44,7 @@ export default function AddressPage() {
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
-  const { data: coingecko } = useSWR<{
-    id: string;
-    symbol: string;
-    name: string;
-    description: { en: string };
-    links: {
-      homepage: string[];
-      facebook_username?: string;
-      subreddit_url?: string;
-      telegram_channel_identifier?: string;
-      twitter_screen_name?: string;
-      repos_url?: {
-        github?: string[];
-        bitbucket?: string[];
-      };
-      chat_url?: string[];
-    };
-    image: { large: string };
-  }>(
-    address
-      ? `https://api.coingecko.com/api/v3/coins/ethereum/contract/${address}`
-      : null,
-    jsonFetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false }
-  );
+  const { data: coingecko } = useCoingecko(address);
   const { data: symbol } = useSWR(
     address ? ["symbol", address] : null,
     async () => {
