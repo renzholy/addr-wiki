@@ -8,6 +8,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import useSWR from "swr";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
+import useCurve from "../hooks/use-curve";
 import { jsonFetcher } from "../utils/fetcher";
 
 const headerStyle: CSSProperties = {
@@ -117,6 +118,11 @@ export default function AddressPage() {
       return json;
     },
     { revalidateOnFocus: false }
+  );
+  const { data: curve } = useCurve(
+    typeof address === "string" && opensea?.schema_name === "ERC20"
+      ? address
+      : undefined
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
@@ -271,6 +277,9 @@ export default function AddressPage() {
               icon="uniswap"
               href={`https://info.uniswap.org/#/tokens/${address}`}
             />
+            {curve ? (
+              <ExternalLink icon="curve" href={`https://curve.fi/${curve}`} />
+            ) : null}
           </section>
         </>
       ) : null}
