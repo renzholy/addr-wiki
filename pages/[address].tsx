@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { getAddress, isAddress } from "ethers/lib/utils";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -62,12 +63,17 @@ export default function AddressPage() {
       clearTimeout(timer);
     };
   }, [copied]);
+  const name =
+    opensea?.collection?.name || coingecko?.name || symbol || "Unknown";
 
   if (!address) {
     return null;
   }
   return (
     <>
+      <Head>
+        <title>{name} | ADDR•WIKI</title>
+      </Head>
       {address && isAddress(address) ? (
         <CopyToClipboard
           text={getAddress(address)}
@@ -118,7 +124,7 @@ export default function AddressPage() {
           rel="noreferrer"
           style={{ color: "#f2f4f8" }}
         >
-          {opensea?.collection?.name || coingecko?.name || symbol || "Unknown"}
+          {name}
           {opensea?.collection?.safelist_request_status === "verified" ? (
             <BlueMark
               style={{

@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>𝙰𝙳𝙳𝚁 • 𝚆𝙸𝙺𝙸</title>
+        <title>ADDR•WIKI</title>
       </Head>
       <Component {...pageProps} />
     </>
