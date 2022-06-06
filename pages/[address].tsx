@@ -307,17 +307,17 @@ export default function AddressPage() {
           icon="etherscan"
           href={`https://etherscan.io/address/${address}`}
         />
-        {coingecko ? (
-          <ExternalLink
-            icon="coingecko"
-            href={`https://www.coingecko.com/coins/${coingecko.id}`}
-          />
-        ) : null}
         {Array.isArray(etherscan?.result) &&
         etherscan?.result.filter(({ SourceCode }) => SourceCode).length ? (
           <ExternalLink
             icon="vscode"
             href={`https://etherscan.deth.net/address/${address}`}
+          />
+        ) : null}
+        {coingecko ? (
+          <ExternalLink
+            icon="coingecko"
+            href={`https://www.coingecko.com/coins/${coingecko.id}`}
           />
         ) : null}
         {opensea?.schema_name &&
