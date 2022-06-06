@@ -143,7 +143,7 @@ export default function AddressPage() {
           rel="noreferrer"
           style={{ color: "#f2f4f8" }}
         >
-          {coingecko?.name || opensea?.collection?.name || symbol || "Unknown"}
+          {opensea?.collection?.name || coingecko?.name || symbol || "Unknown"}
         </a>
       </h3>
       <p
