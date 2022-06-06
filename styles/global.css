@@ -21,3 +21,9 @@ h6 {
 * {
   box-sizing: border-box;
 }
+
+input {
+  color: #f2f4f8;
+  caret-color: #f2f4f8;
+  font-family: "IBM Plex Mono", monospace;
+}
