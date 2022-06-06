@@ -67,6 +67,10 @@ export default async function TwitterApi(
         return;
       }
     }
+    res.setHeader(
+      "cache-control",
+      `public, max-age=${MONTH_IN_SECONDS}, immutable`
+    );
     res.json(null);
   } catch {
     res.status(500).send("parse error");
