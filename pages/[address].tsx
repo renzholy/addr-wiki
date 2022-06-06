@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { CProgressBar } from "@coreui/react";
 import { getAddress, isAddress } from "ethers/lib/utils";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -54,7 +55,8 @@ export default function AddressPage() {
   const { data: coingecko, isValidating: isValidatingCoingecko } =
     useCoingecko(address);
   const { data: symbol, isValidating: isValidatingSymbol } = useSymbol(address);
-  const { data: etherscan } = useEtherscan(address);
+  const { data: etherscan, isValidating: isValidatingEterscan } =
+    useEtherscan(address);
   const { data: curve, isValidating: isValidatingCurve } = useCurve(
     address && opensea?.schema_name === "ERC20" ? address : undefined
   );
@@ -74,18 +76,16 @@ export default function AddressPage() {
     opensea && ["ERC721", "ERC1155"].includes(opensea.schema_name)
       ? opensea?.collection?.name
       : coingecko?.name || opensea?.collection?.name || symbol || "Unknown";
-
-  if (!address) {
-    return null;
-  }
-  if (
+  const isValidating =
     isValidatingOpensea ||
     isValidatingTwitter ||
     isValidatingCoingecko ||
     isValidatingSymbol ||
-    isValidatingCurve
-  ) {
-    return <header style={headerStyle}>Loading...</header>;
+    isValidatingEterscan ||
+    isValidatingCurve;
+
+  if (!address) {
+    return null;
   }
   return (
     <>
@@ -97,9 +97,33 @@ export default function AddressPage() {
           text={getAddress(address)}
           onCopy={() => setCopied(true)}
         >
-          <header style={{ ...headerStyle, cursor: "pointer" }}>
-            {copied ? "Copied!" : getAddress(address)}
-          </header>
+          {isValidating ? (
+            <CProgressBar
+              color="dark"
+              variant="striped"
+              animated
+              style={{ width: "100%", opacity: 0.5 }}
+            >
+              <header
+                style={{
+                  ...headerStyle,
+                  cursor: "pointer",
+                  background: "transparent",
+                }}
+              >
+                {copied ? "Copied!" : getAddress(address)}
+              </header>
+            </CProgressBar>
+          ) : (
+            <header
+              style={{
+                ...headerStyle,
+                cursor: "pointer",
+              }}
+            >
+              {copied ? "Copied!" : getAddress(address)}
+            </header>
+          )}
         </CopyToClipboard>
       ) : (
         <header style={headerStyle}>
@@ -225,7 +249,6 @@ export default function AddressPage() {
           </section>
         </>
       ) : null}
-
       {twitter ||
       opensea?.collection?.twitter_username ||
       coingecko?.links.twitter_screen_name ||
@@ -305,7 +328,6 @@ export default function AddressPage() {
           </section>
         </>
       ) : null}
-
       <h4 style={{ marginTop: 20, textAlign: "center" }}>Tools</h4>
       <section style={sectionStyle}>
         <ExternalLink
