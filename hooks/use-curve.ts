@@ -63,13 +63,7 @@ export default function useCurve(address?: string) {
       const gauge = pool
         ? gaugesArray.find((gauge) => gauge[1].swap === pool.address)
         : undefined;
-      return gauge
-        ? gauge[1].factory
-          ? `${gauge[1].type === "crypto" ? "factory-crypto" : "factory"}/${
-              pool.id.split("-")[pool.id.split("-").length - 1]
-            }`
-          : gauge[0]
-        : undefined;
+      return gauge?.[0];
     },
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );

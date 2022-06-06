@@ -212,7 +212,10 @@ export default function AddressPage() {
               href={`https://info.uniswap.org/#/tokens/${address}`}
             />
             {curve ? (
-              <ExternalLink icon="curve" href={`https://curve.fi/${curve}`} />
+              <ExternalLink
+                icon="curve"
+                href={`https://curve.exchange/pools/${curve}/swap/`}
+              />
             ) : null}
           </section>
         </>
