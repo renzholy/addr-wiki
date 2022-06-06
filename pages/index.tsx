@@ -54,7 +54,7 @@ export default function IndexPage() {
           fontSize: "0.9em",
         }}
       >
-        a wiki for evm 0x addresses
+        wiki for evm 0x address
       </p>
     </div>
   );
