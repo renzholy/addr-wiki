@@ -37,18 +37,22 @@ const sectionStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address as string | undefined;
-  const { data: opensea } = useOpensea(address);
-  const { data: twitter } = useSWR<string | null>(
+  const { data: opensea, isValidating: isValidatingOpensea } =
+    useOpensea(address);
+  const { data: twitter, isValidating: isValidatingTwitter } = useSWR<
+    string | null
+  >(
     address && opensea?.collection?.slug && !opensea.collection.twitter_username
       ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
       : null,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
-  const { data: coingecko } = useCoingecko(address);
-  const { data: symbol } = useSymbol(address);
+  const { data: coingecko, isValidating: isValidatingCoingecko } =
+    useCoingecko(address);
+  const { data: symbol, isValidating: isValidatingSymbol } = useSymbol(address);
   const { data: etherscan } = useEtherscan(address);
-  const { data: curve } = useCurve(
+  const { data: curve, isValidating: isValidatingCurve } = useCurve(
     address && opensea?.schema_name === "ERC20" ? address : undefined
   );
   const [copied, setCopied] = useState(false);
@@ -69,6 +73,15 @@ export default function AddressPage() {
   if (!address) {
     return null;
   }
+  if (
+    isValidatingOpensea ||
+    isValidatingTwitter ||
+    isValidatingCoingecko ||
+    isValidatingSymbol ||
+    isValidatingCurve
+  ) {
+    return <header style={headerStyle}>Loading...</header>;
+  }
   return (
     <>
       <Head>
@@ -79,13 +92,7 @@ export default function AddressPage() {
           text={getAddress(address)}
           onCopy={() => setCopied(true)}
         >
-          <header
-            onClick={() => {}}
-            style={{
-              ...headerStyle,
-              cursor: "pointer",
-            }}
-          >
+          <header style={{ ...headerStyle, cursor: "pointer" }}>
             {copied ? "Copied!" : getAddress(address)}
           </header>
         </CopyToClipboard>
@@ -301,12 +308,13 @@ export default function AddressPage() {
           href={`https://etherscan.io/address/${address}`}
         />
         {Array.isArray(etherscan?.result) &&
-        etherscan?.result.filter(({ SourceCode }) => SourceCode).length ? (
+        etherscan?.result.filter(({ SourceCode }) => SourceCode).length ===
+          0 ? null : (
           <ExternalLink
             icon="vscode"
             href={`https://etherscan.deth.net/address/${address}`}
           />
-        ) : null}
+        )}
         {coingecko ? (
           <ExternalLink
             icon="coingecko"
