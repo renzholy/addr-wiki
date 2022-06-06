@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@upstash/redis": "^1.6.1",
     "ethers": "^5.6.8",
     "next": "^12.1.6",
     "node-fetch": "^3.2.5",

@@ -1,6 +1,14 @@
-import { isAddress } from "ethers/lib/utils";
+import { arrayify, isAddress } from "ethers/lib/utils";
 import { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+const MONTH_IN_SECONDS = 30 * 24 * 60 * 60;
 
 export default async function TwitterApi(
   req: NextApiRequest,
@@ -10,7 +18,19 @@ export default async function TwitterApi(
     res.status(400).send("not address");
     return;
   }
+  const key = `twitter:${Buffer.from(arrayify(req.query.address)).toString(
+    "base64"
+  )}`;
   try {
+    const cached = await redis.get(key);
+    if (cached) {
+      res.setHeader(
+        "cache-control",
+        `public, max-age=${MONTH_IN_SECONDS}, immutable`
+      );
+      res.json(cached);
+      return;
+    }
     const response = await fetch(
       `https://etherscan.io/token/${req.query.address}`
     );
@@ -19,7 +39,11 @@ export default async function TwitterApi(
       /original-title='Twitter: https:\/\/www\.twitter\.com\/([^']+)'/
     )?.[1];
     if (twitter) {
-      res.setHeader("cache-control", "public, max-age=43200, immutable");
+      await redis.set(key, twitter, { ex: MONTH_IN_SECONDS });
+      res.setHeader(
+        "cache-control",
+        `public, max-age=${MONTH_IN_SECONDS}, immutable`
+      );
       res.json(twitter);
       return;
     }
@@ -34,7 +58,11 @@ export default async function TwitterApi(
           .replaceAll("https://twitter.com/opensea", "")
           .match(/https:\/\/twitter\.com\/(\w+)/)?.[1];
       if (twitter2) {
-        res.setHeader("cache-control", "public, max-age=43200, immutable");
+        await redis.set(key, twitter2, { ex: MONTH_IN_SECONDS });
+        res.setHeader(
+          "cache-control",
+          `public, max-age=${MONTH_IN_SECONDS}, immutable`
+        );
         res.json(twitter2);
         return;
       }
