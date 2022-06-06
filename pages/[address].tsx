@@ -42,7 +42,10 @@ export default function AddressPage() {
   const { data: twitter, isValidating: isValidatingTwitter } = useSWR<
     string | null
   >(
-    address && opensea?.collection?.slug && !opensea.collection.twitter_username
+    address &&
+      opensea?.collection?.slug &&
+      !opensea.collection.twitter_username &&
+      ["ERC721", "ERC1155"].includes(opensea.schema_name)
       ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
       : null,
     jsonFetcher,
