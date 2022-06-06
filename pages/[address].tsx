@@ -71,7 +71,9 @@ export default function AddressPage() {
     };
   }, [copied]);
   const name =
-    opensea?.collection?.name || coingecko?.name || symbol || "Unknown";
+    opensea && ["ERC721", "ERC1155"].includes(opensea.schema_name)
+      ? opensea?.collection?.name
+      : coingecko?.name || opensea?.collection?.name || symbol || "Unknown";
 
   if (!address) {
     return null;
