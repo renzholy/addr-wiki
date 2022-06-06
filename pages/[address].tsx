@@ -88,49 +88,36 @@ export default function AddressPage() {
           ADDR<span style={{ color: "#878d96" }}>·</span>WIKI
         </header>
       )}
+      <div
+        style={{
+          height: 120,
+          marginBottom: -120,
+          width: "100%",
+          backgroundImage: opensea?.collection?.banner_image_url
+            ? `url('${opensea?.collection?.banner_image_url}')`
+            : undefined,
+          backgroundSize: "cover",
+          backgroundPositionX: "center",
+        }}
+      />
       <div style={{ margin: "40px auto", lineHeight: 0, width: "fit-content" }}>
-        <div style={{ position: "relative", width: 160, height: 160 }}>
-          <div style={{ position: "absolute" }}>
-            <a
-              href={
-                opensea?.external_link ||
-                coingecko?.links.homepage[0] ||
-                `https://etherscan.io/address/${address}`
-              }
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={
-                  opensea?.collection?.image_url?.replace(/=s\d+$/, "") ||
-                  coingecko?.image.large ||
-                  "/icons/unknown.svg"
-                }
-                alt="logo"
-                width={160}
-                height={160}
-                style={{
-                  background: "#21262a",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  width: 160,
-                  height: 160,
-                }}
-              />
-            </a>
-          </div>
-          {opensea?.collection?.safelist_request_status === "verified" ? (
-            <BlueMark
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                width: 40,
-                height: 40,
-              }}
-            />
-          ) : null}
-        </div>
+        <img
+          src={
+            opensea?.collection?.image_url?.replace(/=s\d+$/, "") ||
+            coingecko?.image.large ||
+            "/icons/unknown.svg"
+          }
+          alt="logo"
+          width={160}
+          height={160}
+          style={{
+            background: "#21262a",
+            borderRadius: 20,
+            objectFit: "cover",
+            width: 160,
+            height: 160,
+          }}
+        />
       </div>
       <h3 style={{ textAlign: "center", marginBottom: 20 }}>
         <a
@@ -144,6 +131,17 @@ export default function AddressPage() {
           style={{ color: "#f2f4f8" }}
         >
           {opensea?.collection?.name || coingecko?.name || symbol || "Unknown"}
+          {opensea?.collection?.safelist_request_status === "verified" ? (
+            <BlueMark
+              style={{
+                marginLeft: 5,
+                marginRight: -25,
+                width: 20,
+                height: 20,
+                verticalAlign: "middle",
+              }}
+            />
+          ) : null}
         </a>
       </h3>
       <p
