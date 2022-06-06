@@ -326,6 +326,12 @@ export default function AddressPage() {
             href={`https://app.traitsniper.com/${address}`}
           />
         ) : null}
+        {opensea?.collection?.slug ? (
+          <ExternalLink
+            icon="nfteye"
+            href={`https://nfteye.io/collections/${opensea.collection.slug}`}
+          />
+        ) : null}
       </section>
       <footer
         style={{ height: "calc(env(safe-area-inset-bottom, 0) + 40px)" }}
