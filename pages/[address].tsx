@@ -88,18 +88,6 @@ export default function AddressPage() {
           ADDR<span style={{ color: "#878d96" }}>·</span>WIKI
         </header>
       )}
-      <div
-        style={{
-          height: 120,
-          marginBottom: -120,
-          width: "100%",
-          backgroundImage: opensea?.collection?.banner_image_url
-            ? `url('${opensea?.collection?.banner_image_url}')`
-            : undefined,
-          backgroundSize: "cover",
-          backgroundPositionX: "center",
-        }}
-      />
       <div style={{ margin: "40px auto", lineHeight: 0, width: "fit-content" }}>
         <img
           src={
