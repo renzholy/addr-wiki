@@ -216,10 +216,7 @@ export default function AddressPage() {
               href={`https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=${address}&chainId=1`}
             />
             {curve ? (
-              <ExternalLink
-                icon="curve"
-                href={`https://curve.exchange/pools/${curve}/swap/`}
-              />
+              <ExternalLink icon="curve" href={`https://curve.fi/${curve}`} />
             ) : null}
           </section>
         </>
