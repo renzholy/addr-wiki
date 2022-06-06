@@ -211,6 +211,10 @@ export default function AddressPage() {
               icon="uniswap"
               href={`https://info.uniswap.org/#/tokens/${address}`}
             />
+            <ExternalLink
+              icon="sushiswap"
+              href={`https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=${address}&chainId=1`}
+            />
             {curve ? (
               <ExternalLink
                 icon="curve"
