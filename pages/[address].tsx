@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { CProgressBar } from "@coreui/react";
 import { getAddress, isAddress } from "ethers/lib/utils";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -97,33 +96,21 @@ export default function AddressPage() {
           text={getAddress(address)}
           onCopy={() => setCopied(true)}
         >
-          {isValidating ? (
-            <CProgressBar
-              color="dark"
-              variant="striped"
-              animated
-              style={{ width: "100%", opacity: 0.5 }}
-            >
-              <header
-                style={{
-                  ...headerStyle,
-                  cursor: "pointer",
-                  background: "transparent",
-                }}
-              >
-                {copied ? "Copied!" : getAddress(address)}
-              </header>
-            </CProgressBar>
-          ) : (
-            <header
-              style={{
-                ...headerStyle,
-                cursor: "pointer",
-              }}
-            >
-              {copied ? "Copied!" : getAddress(address)}
-            </header>
-          )}
+          <header
+            style={{
+              ...headerStyle,
+              cursor: "pointer",
+              animation: isValidating
+                ? "2s linear infinite progress-bar-stripes"
+                : undefined,
+              backgroundImage: isValidating
+                ? "linear-gradient(135deg,rgba(255,255,255,.1) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.1) 75%,transparent 75%,transparent)"
+                : undefined,
+              backgroundSize: "1rem 1rem",
+            }}
+          >
+            {copied ? "Copied!" : getAddress(address)}
+          </header>
         </CopyToClipboard>
       ) : (
         <header style={headerStyle}>

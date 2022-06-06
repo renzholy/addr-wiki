@@ -17,16 +17,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@coreui/coreui@^4.1.5":
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/@coreui/coreui/-/coreui-4.1.5.tgz#79602c1832e844d0a0cd2748965f7fccdc97b79c"
-  integrity sha512-vXYLV/sqcv/nCODM6KD3ExtS0QH8ujKjEadRBJ85CLU81YTd1JIwgYW5kAiV3MY5Fgwi3PS6atBKNZ4cRjJTnw==
-
-"@coreui/react@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@coreui/react/-/react-4.2.2.tgz#3e042c17ba3eafbfbd5d9b26ffb385be3991d250"
-  integrity sha512-9omQh1nei5UOoKsCvJYztwCuOpkCquQ4dAE5lSt/3TE6ZQea1D3CmecI5T9DOlTdY28JsOzFs/PBzEdkCt0J5A==
-
 "@eslint/eslintrc@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.3.0.tgz#29f92c30bb3e771e4a2048c95fa6855392dfac4f"
