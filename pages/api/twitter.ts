@@ -1,4 +1,4 @@
-import { arrayify, isAddress } from "ethers/lib/utils";
+import { isAddress } from "@ethersproject/address";
 import { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 import { Redis } from "@upstash/redis";
@@ -18,9 +18,10 @@ export default async function TwitterApi(
     res.status(400).send("not address");
     return;
   }
-  const key = `twitter:${Buffer.from(arrayify(req.query.address)).toString(
-    "base64"
-  )}`;
+  const key = `twitter:${Buffer.from(
+    req.query.address.replace("0x", ""),
+    "hex"
+  ).toString("base64")}`;
   try {
     const cached = await redis.get(key);
     if (cached) {

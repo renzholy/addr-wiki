@@ -1,4 +1,4 @@
-import { getAddress } from "ethers/lib/utils";
+import { getAddress } from "@ethersproject/address";
 import useSWR from "swr";
 import { jsonFetcher } from "../utils/fetcher";
 

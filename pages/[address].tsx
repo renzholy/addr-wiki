@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { getAddress, isAddress } from "ethers/lib/utils";
+import { getAddress, isAddress } from "@ethersproject/address";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";

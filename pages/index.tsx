@@ -1,4 +1,4 @@
-import { isAddress } from "ethers/lib/utils";
+import { isAddress } from "@ethersproject/address";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
