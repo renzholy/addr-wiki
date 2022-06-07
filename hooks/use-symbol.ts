@@ -19,7 +19,9 @@ export default function useSymbol(address?: string) {
           credentials: "omit",
         }
       );
-      return Buffer.from(json.result.substring(130), "hex").toString();
+      return decodeURIComponent(
+        json.result.substring(130).replace(/[0-9a-f]{2}/g, "%$&")
+      );
     },
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );
