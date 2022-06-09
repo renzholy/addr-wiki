@@ -8,12 +8,7 @@ export default function ExternalLink(props: {
   const size = props.size || 30;
 
   return (
-    <a
-      href={props.href}
-      target="_blank"
-      rel="noreferrer"
-      style={{ display: "inline-block", margin: 10 }}
-    >
+    <a href={props.href} style={{ display: "inline-block", margin: 10 }}>
       <img
         src={
           props.icon.startsWith("http") ? props.icon : `/icons/${props.icon}`

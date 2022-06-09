@@ -7,6 +7,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>ADDR•WIKI</title>
+        <base target="_blank" />
+        <meta name="referrer" content="no-referrer" />
       </Head>
       <Component {...pageProps} />
     </>
