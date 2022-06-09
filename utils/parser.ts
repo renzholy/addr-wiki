@@ -206,9 +206,10 @@ export function parse(
           icon: Icon.Etherscan,
           href: `https://etherscan.io/address/${address}`,
         },
-        Array.isArray(etherscanSourceCode?.result) &&
-        etherscanSourceCode?.result.filter(({ SourceCode }) => SourceCode)
-          .length === 0
+        !code ||
+        (Array.isArray(etherscanSourceCode?.result) &&
+          etherscanSourceCode?.result.filter(({ SourceCode }) => SourceCode)
+            .length === 0)
           ? null
           : {
               icon: Icon.Vscode,
