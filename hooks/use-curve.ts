@@ -10,7 +10,7 @@ type PoolResponse = {
   };
 };
 
-export default function useCurve(address?: string) {
+export function useCurvePool(address?: string) {
   return useSWR<boolean | undefined>(
     address ? ["curve", address] : null,
     async () => {

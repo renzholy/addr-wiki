@@ -1,8 +1,12 @@
 import useSWR from "swr";
 import { jsonFetcher } from "../utils/fetcher";
 
-export default function useEtherscan(address?: string) {
-  return useSWR(
+export type EtherscanSourceCode = {
+  result: { SourceCode?: string }[];
+};
+
+export function useEtherscanSourceCode(address?: string) {
+  return useSWR<EtherscanSourceCode>(
     address
       ? `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}`
       : null,

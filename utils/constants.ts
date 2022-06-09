@@ -1,0 +1,31 @@
+export enum Section {
+  Market = "Markets",
+  Social = "Socials",
+  Tool = "Tools",
+}
+
+export enum Icon {
+  CoinGecko = "coingecko.svg",
+  Curve = "curve.svg",
+  Discord = "discord.svg",
+  Etherscan = "etherscan.svg",
+  Facebook = "facebook.svg",
+  Gem = "gem.svg",
+  Genie = "genie.svg",
+  GitHub = "github.svg",
+  Instagram = "instagram.svg",
+  LarvaLabs = "larvalabs.svg",
+  LooksRare = "looksrare.svg",
+  NFTEye = "nfteye.svg",
+  OpenSea = "opensea.svg",
+  Rarible = "rarible.svg",
+  Reddit = "raddit.svg",
+  SushiSwap = "sushiswap.svg",
+  Telegram = "telegram.svg",
+  TraitSniper = "traitsniper.svg",
+  Twitter = "twitter.svg",
+  Uniswap = "uniswap.svg",
+  Unknown = "unknown.svg",
+  Vscode = "vscode.svg",
+  X2Y2 = "x2y2.svg",
+}

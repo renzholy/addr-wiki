@@ -1,23 +1,18 @@
 import useSWR from "swr";
 import { jsonFetcher } from "../utils/fetcher";
+import { OpenSeaContract } from "./use-opensea";
 
 export default function useTwitter(
   address?: string,
-  openseaContract?: {
-    collection?: {
-      slug: string;
-      twitter_username?: string;
-    };
-    schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS" | "UNKNOWN";
-  }
+  openseaContract?: OpenSeaContract
 ) {
-  return useSWR<string | null>(
+  return useSWR<string>(
     address &&
       openseaContract?.collection?.slug &&
       !openseaContract.collection.twitter_username &&
       ["ERC721", "ERC1155"].includes(openseaContract.schema_name)
       ? `/api/twitter?address=${address}&slug=${openseaContract.collection.slug}`
-      : null,
+      : undefined,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );

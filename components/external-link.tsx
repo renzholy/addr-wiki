@@ -16,9 +16,7 @@ export default function ExternalLink(props: {
     >
       <img
         src={
-          props.icon.startsWith("http")
-            ? props.icon
-            : `/icons/${props.icon}.svg`
+          props.icon.startsWith("http") ? props.icon : `/icons/${props.icon}`
         }
         alt={props.icon}
         width={size}
