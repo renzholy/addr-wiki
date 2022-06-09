@@ -5,7 +5,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import useSWR from "swr";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
 import useCoingecko from "../hooks/use-coingecko";
@@ -13,7 +12,7 @@ import useCurve from "../hooks/use-curve";
 import useEtherscan from "../hooks/use-etherscan";
 import useOpensea from "../hooks/use-opensea";
 import useSymbol from "../hooks/use-symbol";
-import { jsonFetcher } from "../utils/fetcher";
+import useTwitter from "../hooks/use-twitter";
 
 const headerStyle: CSSProperties = {
   zIndex: 1000,
@@ -39,17 +38,9 @@ export default function AddressPage() {
   const address = router.query.address as string | undefined;
   const { data: opensea, isValidating: isValidatingOpensea } =
     useOpensea(address);
-  const { data: twitter, isValidating: isValidatingTwitter } = useSWR<
-    string | null
-  >(
-    address &&
-      opensea?.collection?.slug &&
-      !opensea.collection.twitter_username &&
-      ["ERC721", "ERC1155"].includes(opensea.schema_name)
-      ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
-      : null,
-    jsonFetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false }
+  const { data: twitter, isValidating: isValidatingTwitter } = useTwitter(
+    address,
+    opensea
   );
   const { data: coingecko, isValidating: isValidatingCoingecko } =
     useCoingecko(address);
