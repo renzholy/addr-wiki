@@ -7,6 +7,7 @@ import { Icon, Section } from "./constants";
 export function parse(
   address: string,
   {
+    code,
     openSeaContract,
     openSeaUser,
     twitter,
@@ -15,6 +16,7 @@ export function parse(
     etherscanSourceCode,
     curvePool,
   }: {
+    code?: boolean;
     openSeaContract?: OpenSeaContract;
     openSeaUser?: OpenSeaUser;
     twitter?: string;
@@ -44,7 +46,7 @@ export function parse(
     image:
       openSeaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
       coinGeckoContract?.image.large ||
-      openSeaUser?.account.profile_img_url ||
+      openSeaUser?.account.profile_img_url?.replace(/=s\d+$/, "") ||
       "/icons/unknown.svg",
     link:
       openSeaContract?.external_link ||
@@ -55,6 +57,18 @@ export function parse(
     verified:
       openSeaContract?.collection?.safelist_request_status === "verified",
     sections: {
+      [Section.Profile]: code
+        ? []
+        : [
+            {
+              icon: Icon.Rainbow,
+              href: `https://rainbow.me/${address}`,
+            },
+            {
+              icon: Icon.Debank,
+              href: `https://debank.com/profile/${address}`,
+            },
+          ],
       [Section.Market]:
         openSeaContract?.collection?.slug &&
         ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)

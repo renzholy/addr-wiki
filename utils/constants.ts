@@ -1,4 +1,5 @@
 export enum Section {
+  Profile = "Profiles",
   Market = "Markets",
   Social = "Socials",
   Tool = "Tools",
@@ -7,6 +8,7 @@ export enum Section {
 export enum Icon {
   CoinGecko = "coingecko.svg",
   Curve = "curve.svg",
+  Debank = "debank.svg",
   Discord = "discord.svg",
   Etherscan = "etherscan.svg",
   Facebook = "facebook.svg",
@@ -18,6 +20,7 @@ export enum Icon {
   LooksRare = "looksrare.svg",
   NFTEye = "nfteye.svg",
   OpenSea = "opensea.svg",
+  Rainbow = "rainbow.png",
   Rarible = "rarible.svg",
   Reddit = "raddit.svg",
   SushiSwap = "sushiswap.svg",

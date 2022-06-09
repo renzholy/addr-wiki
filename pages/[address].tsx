@@ -7,6 +7,7 @@ import { CSSProperties, Fragment, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
+import useCode from "../hooks/use-code";
 import { useCoinGeckoContract as useCoinGeckoContract } from "../hooks/use-coingecko";
 import { useCurvePool } from "../hooks/use-curve";
 import { useEtherscanSourceCode } from "../hooks/use-etherscan";
@@ -37,6 +38,7 @@ const sectionStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address as string | undefined;
+  const { data: code, isValidating: isValidatingCode } = useCode(address);
   const { data: openSeaContract, isValidating: isValidatingOpenseaContract } =
     useOpenSeaContract(address);
   const { data: openSeaUser, isValidating: isValidatingOpenseaUser } =
@@ -71,6 +73,7 @@ export default function AddressPage() {
   }, [copied]);
 
   const isValidating =
+    isValidatingCode ||
     isValidatingOpenseaContract ||
     isValidatingOpenseaUser ||
     isValidatingTwitter ||
@@ -85,6 +88,7 @@ export default function AddressPage() {
   const { name, image, link, description, verified, sections } = parse(
     address,
     {
+      code,
       openSeaContract,
       openSeaUser,
       twitter,
