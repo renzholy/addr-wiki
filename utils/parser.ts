@@ -8,6 +8,7 @@ import { Icon, Section } from "./constants";
 export function parse(
   address: string,
   {
+    ens,
     code,
     openSeaContract,
     openSeaUser,
@@ -18,6 +19,7 @@ export function parse(
     curvePool,
     mirror,
   }: {
+    ens?: string;
     code?: boolean;
     openSeaContract?: OpenSeaContract;
     openSeaUser?: OpenSeaUser;
@@ -38,6 +40,7 @@ export function parse(
 } {
   return {
     name:
+      ens ||
       (openSeaContract &&
       ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
         ? openSeaContract?.collection?.name

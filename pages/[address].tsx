@@ -10,6 +10,7 @@ import ExternalLink from "../components/external-link";
 import useCode from "../hooks/use-code";
 import { useCoinGeckoContract as useCoinGeckoContract } from "../hooks/use-coingecko";
 import { useCurvePool } from "../hooks/use-curve";
+import useEns from "../hooks/use-ens";
 import { useEtherscanSourceCode } from "../hooks/use-etherscan";
 import useMirror from "../hooks/use-mirror";
 import { useOpenSeaContract, useOpenSeaUser } from "../hooks/use-opensea";
@@ -39,6 +40,7 @@ const sectionStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address as string | undefined;
+  const { data: ens, isValidating: isValidatingEns } = useEns(address);
   const { data: code, isValidating: isValidatingCode } = useCode(address);
   const { data: openSeaContract, isValidating: isValidatingOpenseaContract } =
     useOpenSeaContract(address);
@@ -56,7 +58,7 @@ export default function AddressPage() {
   const {
     data: etherscanSourceCode,
     isValidating: isValidatingEterscanSourceCode,
-  } = useEtherscanSourceCode(address);
+  } = useEtherscanSourceCode(code ? address : undefined);
   const { data: curvePool, isValidating: isValidatingCurvePool } = useCurvePool(
     address && openSeaContract?.schema_name === "ERC20" ? address : undefined
   );
@@ -75,6 +77,7 @@ export default function AddressPage() {
   }, [copied]);
 
   const isValidating =
+    isValidatingEns ||
     isValidatingCode ||
     isValidatingOpenseaContract ||
     isValidatingOpenseaUser ||
@@ -91,6 +94,7 @@ export default function AddressPage() {
   const { name, image, link, description, verified, sections } = parse(
     address,
     {
+      ens,
       code,
       openSeaContract,
       openSeaUser,
@@ -173,7 +177,7 @@ export default function AddressPage() {
         style={{
           margin: "0 auto",
           width: "100%",
-          marginBottom: 40,
+          marginBottom: description ? 40 : 20,
           padding: "0 20px",
           textAlign: "center",
           color: "#a2a9b0",
