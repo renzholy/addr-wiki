@@ -43,9 +43,9 @@ export default function AddressPage() {
   const { data: ens, isValidating: isValidatingEns } = useEns(address);
   const { data: code, isValidating: isValidatingCode } = useCode(address);
   const { data: openSeaContract, isValidating: isValidatingOpenseaContract } =
-    useOpenSeaContract(address);
+    useOpenSeaContract(code ? address : undefined);
   const { data: openSeaUser, isValidating: isValidatingOpenseaUser } =
-    useOpenSeaUser(address);
+    useOpenSeaUser(code === false ? address : undefined);
   const { data: twitter, isValidating: isValidatingTwitter } = useTwitter(
     address,
     openSeaContract
@@ -53,16 +53,20 @@ export default function AddressPage() {
   const {
     data: coinGeckoContract,
     isValidating: isValidatingCoinGeckoContract,
-  } = useCoinGeckoContract(address);
-  const { data: symbol, isValidating: isValidatingSymbol } = useSymbol(address);
+  } = useCoinGeckoContract(code ? address : undefined);
+  const { data: symbol, isValidating: isValidatingSymbol } = useSymbol(
+    code ? address : undefined
+  );
   const {
     data: etherscanSourceCode,
     isValidating: isValidatingEterscanSourceCode,
   } = useEtherscanSourceCode(code ? address : undefined);
   const { data: curvePool, isValidating: isValidatingCurvePool } = useCurvePool(
-    address && openSeaContract?.schema_name === "ERC20" ? address : undefined
+    code && openSeaContract?.schema_name === "ERC20" ? address : undefined
   );
-  const { data: mirror, isValidating: isValidatingMirror } = useMirror(address);
+  const { data: mirror, isValidating: isValidatingMirror } = useMirror(
+    code === false ? address : undefined
+  );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) {
