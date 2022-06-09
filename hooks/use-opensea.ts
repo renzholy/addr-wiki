@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { jsonFetcher } from "../utils/fetcher";
 
-export default function useOpensea(address?: string) {
+export function useOpenseaContract(address?: string) {
   return useSWR<{
     collection?: {
       name: string;
@@ -25,6 +25,17 @@ export default function useOpensea(address?: string) {
     schema_name: "ERC20" | "ERC721" | "ERC1155" | "CRYPTOPUNKS" | "UNKNOWN";
   }>(
     address ? `https://api.opensea.io/api/v1/asset_contract/${address}` : null,
+    jsonFetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false }
+  );
+}
+
+export function useOpenseaUser(address?: string) {
+  return useSWR<{
+    username: string;
+    account: { user: { username: string }; profile_img_url?: string };
+  }>(
+    address ? `https://api.opensea.io/api/v1/user/${address}` : null,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );

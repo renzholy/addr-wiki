@@ -10,7 +10,7 @@ import ExternalLink from "../components/external-link";
 import useCoingecko from "../hooks/use-coingecko";
 import useCurve from "../hooks/use-curve";
 import useEtherscan from "../hooks/use-etherscan";
-import useOpensea from "../hooks/use-opensea";
+import { useOpenseaContract } from "../hooks/use-opensea";
 import useSymbol from "../hooks/use-symbol";
 import useTwitter from "../hooks/use-twitter";
 
@@ -36,11 +36,11 @@ const sectionStyle: CSSProperties = {
 export default function AddressPage() {
   const router = useRouter();
   const address = router.query.address as string | undefined;
-  const { data: opensea, isValidating: isValidatingOpensea } =
-    useOpensea(address);
+  const { data: openseaContract, isValidating: isValidatingOpenseaContract } =
+    useOpenseaContract(address);
   const { data: twitter, isValidating: isValidatingTwitter } = useTwitter(
     address,
-    opensea
+    openseaContract
   );
   const { data: coingecko, isValidating: isValidatingCoingecko } =
     useCoingecko(address);
@@ -48,7 +48,7 @@ export default function AddressPage() {
   const { data: etherscan, isValidating: isValidatingEterscan } =
     useEtherscan(address);
   const { data: curve, isValidating: isValidatingCurve } = useCurve(
-    address && opensea?.schema_name === "ERC20" ? address : undefined
+    address && openseaContract?.schema_name === "ERC20" ? address : undefined
   );
   const [copied, setCopied] = useState(false);
   useEffect(() => {
@@ -63,11 +63,15 @@ export default function AddressPage() {
     };
   }, [copied]);
   const name =
-    opensea && ["ERC721", "ERC1155"].includes(opensea.schema_name)
-      ? opensea?.collection?.name
-      : coingecko?.name || opensea?.collection?.name || symbol || "Unknown";
+    openseaContract &&
+    ["ERC721", "ERC1155"].includes(openseaContract.schema_name)
+      ? openseaContract?.collection?.name
+      : coingecko?.name ||
+        openseaContract?.collection?.name ||
+        symbol ||
+        "Unknown";
   const isValidating =
-    isValidatingOpensea ||
+    isValidatingOpenseaContract ||
     isValidatingTwitter ||
     isValidatingCoingecko ||
     isValidatingSymbol ||
@@ -111,7 +115,7 @@ export default function AddressPage() {
       <div style={{ margin: "40px auto", lineHeight: 0, width: "fit-content" }}>
         <img
           src={
-            opensea?.collection?.image_url?.replace(/=s\d+$/, "") ||
+            openseaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
             coingecko?.image.large ||
             "/icons/unknown.svg"
           }
@@ -130,7 +134,7 @@ export default function AddressPage() {
       <h3 style={{ textAlign: "center", marginBottom: 20 }}>
         <a
           href={
-            opensea?.external_link ||
+            openseaContract?.external_link ||
             coingecko?.links.homepage?.[0] ||
             `https://etherscan.io/address/${address}`
           }
@@ -139,7 +143,8 @@ export default function AddressPage() {
           style={{ color: "#f2f4f8" }}
         >
           {name}
-          {opensea?.collection?.safelist_request_status === "verified" ? (
+          {openseaContract?.collection?.safelist_request_status ===
+          "verified" ? (
             <BlueMark
               style={{
                 marginLeft: 5,
@@ -169,16 +174,16 @@ export default function AddressPage() {
           WebkitBoxOrient: "vertical",
         }}
       >
-        {coingecko?.description.en || opensea?.description}
+        {coingecko?.description.en || openseaContract?.description}
       </p>
-      {opensea?.collection?.slug &&
-      ["ERC721", "ERC1155"].includes(opensea.schema_name) ? (
+      {openseaContract?.collection?.slug &&
+      ["ERC721", "ERC1155"].includes(openseaContract.schema_name) ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
             <ExternalLink
               icon="opensea"
-              href={`https://opensea.io/collection/${opensea.collection.slug}`}
+              href={`https://opensea.io/collection/${openseaContract.collection.slug}`}
             />
             <ExternalLink
               icon="looksrare"
@@ -202,14 +207,14 @@ export default function AddressPage() {
             />
           </section>
         </>
-      ) : opensea?.schema_name === "CRYPTOPUNKS" ? (
+      ) : openseaContract?.schema_name === "CRYPTOPUNKS" ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
             <ExternalLink icon="larvalabs" href="https://cryptopunks.app/" />
           </section>
         </>
-      ) : opensea?.schema_name === "ERC20" ? (
+      ) : openseaContract?.schema_name === "ERC20" ? (
         <>
           <h4 style={{ marginTop: 20, textAlign: "center" }}>Markets</h4>
           <section style={sectionStyle}>
@@ -228,12 +233,12 @@ export default function AddressPage() {
         </>
       ) : null}
       {twitter ||
-      opensea?.collection?.twitter_username ||
+      openseaContract?.collection?.twitter_username ||
       coingecko?.links.twitter_screen_name ||
-      opensea?.collection?.discord_url ||
+      openseaContract?.collection?.discord_url ||
       coingecko?.links.chat_url?.some((url) => url.includes("discord")) ||
       coingecko?.links.facebook_username ||
-      opensea?.collection?.instagram_username ||
+      openseaContract?.collection?.instagram_username ||
       coingecko?.links.subreddit_url ||
       coingecko?.links.telegram_channel_identifier ||
       coingecko?.links.repos_url?.github?.length ? (
@@ -245,10 +250,10 @@ export default function AddressPage() {
                 icon="twitter"
                 href={`https://twitter.com/${twitter}`}
               />
-            ) : opensea?.collection?.twitter_username ? (
+            ) : openseaContract?.collection?.twitter_username ? (
               <ExternalLink
                 icon="twitter"
-                href={`https://twitter.com/${opensea.collection.twitter_username}`}
+                href={`https://twitter.com/${openseaContract.collection.twitter_username}`}
               />
             ) : coingecko?.links.twitter_screen_name ? (
               <ExternalLink
@@ -256,10 +261,10 @@ export default function AddressPage() {
                 href={`https://twitter.com/${coingecko?.links.twitter_screen_name}`}
               />
             ) : null}
-            {opensea?.collection?.discord_url ? (
+            {openseaContract?.collection?.discord_url ? (
               <ExternalLink
                 icon="discord"
-                href={opensea.collection.discord_url}
+                href={openseaContract.collection.discord_url}
               />
             ) : coingecko?.links.chat_url?.some((url) =>
                 url.includes("discord")
@@ -279,10 +284,10 @@ export default function AddressPage() {
                 href={`https://www.facebook.com/${coingecko.links.facebook_username}`}
               />
             ) : null}
-            {opensea?.collection?.instagram_username ? (
+            {openseaContract?.collection?.instagram_username ? (
               <ExternalLink
                 icon="instagram"
-                href={`https://www.instagram.com/${opensea.collection.instagram_username}`}
+                href={`https://www.instagram.com/${openseaContract.collection.instagram_username}`}
               />
             ) : null}
             {coingecko?.links.subreddit_url ? (
@@ -326,17 +331,17 @@ export default function AddressPage() {
             href={`https://www.coingecko.com/coins/${coingecko.id}`}
           />
         ) : null}
-        {opensea?.schema_name &&
-        ["ERC721", "ERC1155"].includes(opensea.schema_name) ? (
+        {openseaContract?.schema_name &&
+        ["ERC721", "ERC1155"].includes(openseaContract.schema_name) ? (
           <ExternalLink
             icon="traitsniper"
             href={`https://app.traitsniper.com/${address}`}
           />
         ) : null}
-        {opensea?.collection?.slug ? (
+        {openseaContract?.collection?.slug ? (
           <ExternalLink
             icon="nfteye"
-            href={`https://nfteye.io/collections/${opensea.collection.slug}`}
+            href={`https://nfteye.io/collections/${openseaContract.collection.slug}`}
           />
         ) : null}
       </section>

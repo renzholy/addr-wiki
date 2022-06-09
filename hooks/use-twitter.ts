@@ -3,7 +3,7 @@ import { jsonFetcher } from "../utils/fetcher";
 
 export default function useTwitter(
   address?: string,
-  opensea?: {
+  openseaContract?: {
     collection?: {
       slug: string;
       twitter_username?: string;
@@ -13,10 +13,10 @@ export default function useTwitter(
 ) {
   return useSWR<string | null>(
     address &&
-      opensea?.collection?.slug &&
-      !opensea.collection.twitter_username &&
-      ["ERC721", "ERC1155"].includes(opensea.schema_name)
-      ? `/api/twitter?address=${address}&slug=${opensea.collection.slug}`
+      openseaContract?.collection?.slug &&
+      !openseaContract.collection.twitter_username &&
+      ["ERC721", "ERC1155"].includes(openseaContract.schema_name)
+      ? `/api/twitter?address=${address}&slug=${openseaContract.collection.slug}`
       : null,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
