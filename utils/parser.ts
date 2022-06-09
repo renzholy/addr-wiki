@@ -196,7 +196,7 @@ export function parse(
             }
           : null,
       ]),
-      [Section.Tool]: compact([
+      [Section.Other]: compact([
         openSeaContract?.external_link || coinGeckoContract?.links.homepage?.[0]
           ? {
               icon: Icon.Website,
