@@ -38,10 +38,13 @@ export function parse(
         ? openSeaContract?.collection?.name
         : coinGeckoContract?.name ||
           openSeaContract?.collection?.name ||
-          symbol) || "Unknown",
+          symbol) ||
+      openSeaUser?.username ||
+      "Unknown",
     image:
       openSeaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
       coinGeckoContract?.image.large ||
+      openSeaUser?.account.profile_img_url ||
       "/icons/unknown.svg",
     link:
       openSeaContract?.external_link ||
