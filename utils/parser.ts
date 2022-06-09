@@ -33,7 +33,6 @@ export function parse(
 ): {
   name: string;
   image: string;
-  link: string;
   description?: string;
   verified: boolean;
   sections: { [key in Section]: { icon: Icon; href: string }[] };
@@ -56,10 +55,6 @@ export function parse(
       openSeaUser?.account.profile_img_url?.replace(/=s\d+$/, "") ||
       mirror?.avatarURL ||
       "/icons/unknown.svg",
-    link:
-      openSeaContract?.external_link ||
-      coinGeckoContract?.links.homepage?.[0] ||
-      `https://etherscan.io/address/${address}`,
     description:
       coinGeckoContract?.description.en ||
       openSeaContract?.description ||
@@ -202,6 +197,14 @@ export function parse(
           : null,
       ]),
       [Section.Tool]: compact([
+        openSeaContract?.external_link || coinGeckoContract?.links.homepage?.[0]
+          ? {
+              icon: Icon.Website,
+              href:
+                openSeaContract?.external_link ||
+                coinGeckoContract?.links.homepage?.[0]!,
+            }
+          : null,
         {
           icon: Icon.Etherscan,
           href: `https://etherscan.io/address/${address}`,

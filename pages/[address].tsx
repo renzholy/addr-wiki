@@ -95,21 +95,18 @@ export default function AddressPage() {
   if (!address || !isAddress(address)) {
     return null;
   }
-  const { name, image, link, description, verified, sections } = parse(
-    address,
-    {
-      ens,
-      code,
-      openSeaContract,
-      openSeaUser,
-      twitter,
-      coinGeckoContract,
-      symbol,
-      etherscanSourceCode,
-      curvePool,
-      mirror,
-    }
-  );
+  const { name, image, description, verified, sections } = parse(address, {
+    ens,
+    code,
+    openSeaContract,
+    openSeaUser,
+    twitter,
+    coinGeckoContract,
+    symbol,
+    etherscanSourceCode,
+    curvePool,
+    mirror,
+  });
   return (
     <>
       <Head>
@@ -156,26 +153,19 @@ export default function AddressPage() {
           }}
         />
       </div>
-      <h3 style={{ textAlign: "center", marginBottom: 20 }}>
-        <a
-          href={link}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: "#f2f4f8" }}
-        >
-          {name}
-          {verified ? (
-            <BlueMark
-              style={{
-                marginLeft: 5,
-                marginRight: -25,
-                width: 20,
-                height: 20,
-                verticalAlign: "middle",
-              }}
-            />
-          ) : null}
-        </a>
+      <h3 style={{ color: "#f2f4f8", textAlign: "center", marginBottom: 20 }}>
+        {name}
+        {verified ? (
+          <BlueMark
+            style={{
+              marginLeft: 5,
+              marginRight: -25,
+              width: 20,
+              height: 20,
+              verticalAlign: "middle",
+            }}
+          />
+        ) : null}
       </h3>
       <p
         style={{

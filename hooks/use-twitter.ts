@@ -12,7 +12,7 @@ export default function useTwitter(
       !openseaContract.collection.twitter_username &&
       ["ERC721", "ERC1155"].includes(openseaContract.schema_name)
       ? `/api/twitter?address=${address}&slug=${openseaContract.collection.slug}`
-      : undefined,
+      : null,
     jsonFetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false }
   );

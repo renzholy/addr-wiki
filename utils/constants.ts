@@ -31,5 +31,6 @@ export enum Icon {
   Uniswap = "uniswap.svg",
   Unknown = "unknown.svg",
   Vscode = "vscode.svg",
+  Website = "website.svg",
   X2Y2 = "x2y2.svg",
 }
