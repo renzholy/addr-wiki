@@ -28,8 +28,16 @@ input {
   font-family: "IBM Plex Mono", monospace;
 }
 
+a {
+  color: #f2f4f8;
+}
+
 @keyframes progress-bar-stripes {
   100% {
     background-position-x: 40px;
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

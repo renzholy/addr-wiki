@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { CSSProperties, Fragment, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { defaultBlockParse, defaultReactOutput } from "simple-markdown";
 import BlueMark from "../components/blue-mark";
 import ExternalLink from "../components/external-link";
 import useCode from "../hooks/use-code";
@@ -177,14 +178,13 @@ export default function AddressPage() {
           color: "#a2a9b0",
           maxWidth: 600,
           fontSize: "0.9em",
-          display: "-webkit-box",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          WebkitLineClamp: 5,
-          WebkitBoxOrient: "vertical",
+          overflowY: "scroll",
+          maxHeight: "7em",
         }}
       >
-        {description}
+        {description
+          ? defaultReactOutput(defaultBlockParse(description))
+          : null}
       </p>
       {Object.entries(sections).map(([key, value]) =>
         value.length ? (
