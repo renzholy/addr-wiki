@@ -137,6 +137,14 @@ export function parse(
             ])
           : [],
       [Section.Social]: compact([
+        openSeaContract?.external_link || coinGeckoContract?.links.homepage?.[0]
+          ? {
+              icon: Icon.Website,
+              href:
+                openSeaContract?.external_link ||
+                coinGeckoContract?.links.homepage?.[0]!,
+            }
+          : null,
         twitter
           ? {
               icon: Icon.Twitter,
@@ -189,26 +197,18 @@ export function parse(
               href: `https://t.me/${coinGeckoContract?.links.telegram_channel_identifier}`,
             }
           : null,
-        coinGeckoContract?.links.repos_url?.github?.length
-          ? {
-              icon: Icon.GitHub,
-              href: coinGeckoContract.links.repos_url.github[0],
-            }
-          : null,
       ]),
       [Section.Other]: compact([
-        openSeaContract?.external_link || coinGeckoContract?.links.homepage?.[0]
-          ? {
-              icon: Icon.Website,
-              href:
-                openSeaContract?.external_link ||
-                coinGeckoContract?.links.homepage?.[0]!,
-            }
-          : null,
         {
           icon: Icon.Etherscan,
           href: `https://etherscan.io/address/${address}`,
         },
+        coinGeckoContract
+          ? {
+              icon: Icon.CoinGecko,
+              href: `https://www.coingecko.com/coins/${coinGeckoContract.id}`,
+            }
+          : null,
         !code ||
         (Array.isArray(etherscanSourceCode?.result) &&
           etherscanSourceCode?.result.filter(({ SourceCode }) => SourceCode)
@@ -218,10 +218,10 @@ export function parse(
               icon: Icon.Vscode,
               href: `https://etherscan.deth.net/address/${address}`,
             },
-        coinGeckoContract
+        coinGeckoContract?.links.repos_url?.github?.length
           ? {
-              icon: Icon.CoinGecko,
-              href: `https://www.coingecko.com/coins/${coinGeckoContract.id}`,
+              icon: Icon.GitHub,
+              href: coinGeckoContract.links.repos_url.github[0],
             }
           : null,
         openSeaContract?.schema_name &&
