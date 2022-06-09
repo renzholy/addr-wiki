@@ -11,6 +11,7 @@ import useCode from "../hooks/use-code";
 import { useCoinGeckoContract as useCoinGeckoContract } from "../hooks/use-coingecko";
 import { useCurvePool } from "../hooks/use-curve";
 import { useEtherscanSourceCode } from "../hooks/use-etherscan";
+import useMirror from "../hooks/use-mirror";
 import { useOpenSeaContract, useOpenSeaUser } from "../hooks/use-opensea";
 import useSymbol from "../hooks/use-symbol";
 import useTwitter from "../hooks/use-twitter";
@@ -59,6 +60,7 @@ export default function AddressPage() {
   const { data: curvePool, isValidating: isValidatingCurvePool } = useCurvePool(
     address && openSeaContract?.schema_name === "ERC20" ? address : undefined
   );
+  const { data: mirror, isValidating: isValidatingMirror } = useMirror(address);
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) {
@@ -80,7 +82,8 @@ export default function AddressPage() {
     isValidatingCoinGeckoContract ||
     isValidatingSymbol ||
     isValidatingEterscanSourceCode ||
-    isValidatingCurvePool;
+    isValidatingCurvePool ||
+    isValidatingMirror;
 
   if (!address || !isAddress(address)) {
     return null;
@@ -96,6 +99,7 @@ export default function AddressPage() {
       symbol,
       etherscanSourceCode,
       curvePool,
+      mirror,
     }
   );
   return (

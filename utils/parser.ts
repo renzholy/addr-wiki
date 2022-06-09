@@ -1,6 +1,7 @@
 import { compact } from "lodash-es";
 import { CoinGeckoContract } from "../hooks/use-coingecko";
 import { EtherscanSourceCode } from "../hooks/use-etherscan";
+import { Mirror } from "../hooks/use-mirror";
 import { OpenSeaContract, OpenSeaUser } from "../hooks/use-opensea";
 import { Icon, Section } from "./constants";
 
@@ -15,6 +16,7 @@ export function parse(
     symbol,
     etherscanSourceCode,
     curvePool,
+    mirror,
   }: {
     code?: boolean;
     openSeaContract?: OpenSeaContract;
@@ -24,6 +26,7 @@ export function parse(
     symbol?: string;
     etherscanSourceCode?: EtherscanSourceCode;
     curvePool?: boolean;
+    mirror?: Mirror;
   }
 ): {
   name: string;
@@ -42,24 +45,28 @@ export function parse(
           openSeaContract?.collection?.name ||
           symbol) ||
       openSeaUser?.username ||
+      mirror?.displayName ||
       "Unknown",
     image:
       openSeaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
       coinGeckoContract?.image.large ||
       openSeaUser?.account.profile_img_url?.replace(/=s\d+$/, "") ||
+      mirror?.avatarURL ||
       "/icons/unknown.svg",
     link:
       openSeaContract?.external_link ||
       coinGeckoContract?.links.homepage?.[0] ||
       `https://etherscan.io/address/${address}`,
     description:
-      coinGeckoContract?.description.en || openSeaContract?.description,
+      coinGeckoContract?.description.en ||
+      openSeaContract?.description ||
+      mirror?.description,
     verified:
       openSeaContract?.collection?.safelist_request_status === "verified",
     sections: {
       [Section.Profile]: code
         ? []
-        : [
+        : compact([
             {
               icon: Icon.Rainbow,
               href: `https://rainbow.me/${address}`,
@@ -68,7 +75,15 @@ export function parse(
               icon: Icon.Debank,
               href: `https://debank.com/profile/${address}`,
             },
-          ],
+            mirror
+              ? {
+                  icon: Icon.Mirror,
+                  href: mirror.domain
+                    ? `https://${mirror.domain}`
+                    : `https://mirror.xyz/${address}/`,
+                }
+              : null,
+          ]),
       [Section.Market]:
         openSeaContract?.collection?.slug &&
         ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
