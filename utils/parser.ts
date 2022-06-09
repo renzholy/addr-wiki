@@ -231,7 +231,9 @@ export function parse(
               href: `https://app.traitsniper.com/${address}`,
             }
           : null,
-        openSeaContract?.collection?.slug
+        openSeaContract?.collection?.slug &&
+        openSeaContract?.schema_name &&
+        ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
           ? {
               icon: Icon.NFTEye,
               href: `https://nfteye.io/collections/${openSeaContract.collection.slug}`,
