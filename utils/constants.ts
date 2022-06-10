@@ -24,7 +24,7 @@ export enum Icon {
   OpenSea = "opensea.svg",
   Rainbow = "rainbow.png",
   Rarible = "rarible.svg",
-  Reddit = "raddit.svg",
+  Reddit = "reddit.svg",
   SushiSwap = "sushiswap.svg",
   Telegram = "telegram.svg",
   TraitSniper = "traitsniper.svg",
