@@ -12,6 +12,7 @@ export type CoinGeckoContract = {
     subreddit_url?: string;
     telegram_channel_identifier?: string;
     twitter_screen_name?: string;
+    official_forum_url?: string[];
     repos_url?: {
       github?: string[];
       bitbucket?: string[];

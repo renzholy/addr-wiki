@@ -202,6 +202,15 @@ export function parse(
               icon: Icon.Medium,
               href: `https://medium.com/@${openSeaContract.collection.medium_username}`,
             }
+          : coinGeckoContract?.links.official_forum_url?.find((url) =>
+              url.includes("medium.com")
+            )
+          ? {
+              icon: Icon.Medium,
+              href: coinGeckoContract.links.official_forum_url.find((url) =>
+                url.includes("medium.com")
+              )!,
+            }
           : null,
       ]),
       [Section.Other]: compact([
