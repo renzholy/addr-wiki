@@ -18,6 +18,7 @@ export enum Icon {
   Instagram = "instagram.svg",
   LarvaLabs = "larvalabs.svg",
   LooksRare = "looksrare.svg",
+  Medium = "medium.svg",
   Mirror = "mirror.svg",
   NFTEye = "nfteye.svg",
   OpenSea = "opensea.svg",

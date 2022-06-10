@@ -158,7 +158,7 @@ export function parse(
           : coinGeckoContract?.links.twitter_screen_name
           ? {
               icon: Icon.Twitter,
-              href: `https://twitter.com/${coinGeckoContract?.links.twitter_screen_name}`,
+              href: `https://twitter.com/${coinGeckoContract.links.twitter_screen_name}`,
             }
           : null,
         openSeaContract?.collection?.discord_url
@@ -188,13 +188,19 @@ export function parse(
         coinGeckoContract?.links.subreddit_url
           ? {
               icon: Icon.Reddit,
-              href: coinGeckoContract?.links.subreddit_url,
+              href: coinGeckoContract.links.subreddit_url,
             }
           : null,
         coinGeckoContract?.links.telegram_channel_identifier
           ? {
               icon: Icon.Telegram,
-              href: `https://t.me/${coinGeckoContract?.links.telegram_channel_identifier}`,
+              href: `https://t.me/${coinGeckoContract.links.telegram_channel_identifier}`,
+            }
+          : null,
+        openSeaContract?.collection?.medium_username
+          ? {
+              icon: Icon.Medium,
+              href: `https://medium.com/@${openSeaContract.collection.medium_username}`,
             }
           : null,
       ]),
