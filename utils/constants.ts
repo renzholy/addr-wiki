@@ -6,6 +6,7 @@ export enum Section {
 }
 
 export enum Icon {
+  OneInch = "1inch.svg",
   CoinGecko = "coingecko.svg",
   Curve = "curve.svg",
   Debank = "debank.svg",

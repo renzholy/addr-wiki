@@ -128,6 +128,10 @@ export function parse(
                 icon: Icon.SushiSwap,
                 href: `https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=${address}&chainId=1`,
               },
+              {
+                icon: Icon.OneInch,
+                href: `https://app.1inch.io/#/1/swap/ETH/${address}`,
+              },
               curvePool
                 ? {
                     icon: Icon.Curve,
