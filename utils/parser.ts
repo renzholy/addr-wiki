@@ -73,7 +73,7 @@ export function parse(
               icon: Icon.Debank,
               href: `https://debank.com/profile/${address}`,
             },
-            mirror
+            mirror?.domain
               ? {
                   icon: Icon.Mirror,
                   href: mirror.domain

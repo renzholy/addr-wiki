@@ -2,8 +2,8 @@ import useSWR from "swr";
 import { jsonFetcher } from "../utils/fetcher";
 
 export type Mirror = {
-  avatarURL: string;
-  displayName: string;
+  avatarURL?: string;
+  displayName?: string;
   description?: string;
   domain?: string;
 };
