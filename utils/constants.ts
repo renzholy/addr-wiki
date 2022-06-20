@@ -20,6 +20,7 @@ export enum Icon {
   LarvaLabs = "larvalabs.svg",
   LooksRare = "looksrare.svg",
   Medium = "medium.svg",
+  Meebits = "meebits.svg",
   Mirror = "mirror.svg",
   NFTEye = "nfteye.svg",
   OpenSea = "opensea.svg",

@@ -86,6 +86,15 @@ export function parse(
         openSeaContract?.collection?.slug &&
         ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
           ? [
+              ...(address.toLowerCase() ===
+              "0x7bd29408f11d2bfc23c34f18275bbf23bb716bc7"
+                ? [
+                    {
+                      icon: Icon.Meebits,
+                      href: `https://meebits.app`,
+                    },
+                  ]
+                : []),
               {
                 icon: Icon.OpenSea,
                 href: `https://opensea.io/collection/${openSeaContract.collection.slug}`,
