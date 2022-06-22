@@ -249,6 +249,12 @@ export function parse(
               href: `https://www.coingecko.com/coins/${coinGeckoContract.id}`,
             }
           : null,
+        openSeaContract?.schema_name === "ERC20"
+          ? {
+              icon: Icon.Eigenphi,
+              href: `https://eigenphi.io/ethereum/token/${address}`,
+            }
+          : null,
         !code ||
         (Array.isArray(etherscanSourceCode?.result) &&
           etherscanSourceCode?.result.filter(({ SourceCode }) => SourceCode)

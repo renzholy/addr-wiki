@@ -11,6 +11,7 @@ export enum Icon {
   Curve = "curve.svg",
   Debank = "debank.svg",
   Discord = "discord.svg",
+  Eigenphi = "eigenphi.svg",
   Etherscan = "etherscan.svg",
   Facebook = "facebook.svg",
   FlipsWatch = "flipswatch.svg",
