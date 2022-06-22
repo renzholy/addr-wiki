@@ -66,6 +66,10 @@ export function parse(
         ? []
         : compact([
             {
+              icon: Icon.OpenSea,
+              href: `https://opensea.io/${address}`,
+            },
+            {
               icon: Icon.Rainbow,
               href: `https://rainbow.me/${address}`,
             },
