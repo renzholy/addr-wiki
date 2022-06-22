@@ -78,6 +78,10 @@ export function parse(
               href: `https://www.nftscan.com/${address}`,
             },
             {
+              icon: Icon.OpenSea,
+              href: `https://opensea.io/${address}`,
+            },
+            {
               icon: Icon.Debank,
               href: `https://debank.com/profile/${address}`,
             },
