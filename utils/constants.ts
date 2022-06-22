@@ -22,6 +22,7 @@ export enum Icon {
   Medium = "medium.svg",
   Meebits = "meebits.svg",
   Mirror = "mirror.svg",
+  NFTScan = "nftscan.svg",
   NFTEye = "nfteye.svg",
   OpenSea = "opensea.svg",
   Rainbow = "rainbow.png",

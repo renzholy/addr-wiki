@@ -66,8 +66,8 @@ export function parse(
         ? []
         : compact([
             {
-              icon: Icon.OpenSea,
-              href: `https://opensea.io/${address}`,
+              icon: Icon.NFTScan,
+              href: `https://www.nftscan.com/${address}`,
             },
             {
               icon: Icon.Rainbow,
