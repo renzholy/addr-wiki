@@ -66,12 +66,16 @@ export function parse(
         ? []
         : compact([
             {
-              icon: Icon.NFTScan,
-              href: `https://www.nftscan.com/${address}`,
+              icon: Icon.FlipsWatch,
+              href: `https://flips.watch/${address}`,
             },
             {
               icon: Icon.Rainbow,
               href: `https://rainbow.me/${address}`,
+            },
+            {
+              icon: Icon.NFTScan,
+              href: `https://www.nftscan.com/${address}`,
             },
             {
               icon: Icon.Debank,

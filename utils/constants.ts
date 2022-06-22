@@ -13,6 +13,7 @@ export enum Icon {
   Discord = "discord.svg",
   Etherscan = "etherscan.svg",
   Facebook = "facebook.svg",
+  FlipsWatch = "flipswatch.svg",
   Gem = "gem.svg",
   Genie = "genie.svg",
   GitHub = "github.svg",
