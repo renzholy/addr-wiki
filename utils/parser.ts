@@ -270,21 +270,25 @@ export function parse(
               href: coinGeckoContract.links.repos_url.github[0],
             }
           : null,
-        openSeaContract?.schema_name &&
+        ...(openSeaContract?.schema_name &&
         ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
-          ? {
-              icon: Icon.TraitSniper,
-              href: `https://app.traitsniper.com/${address}`,
-            }
-          : null,
-        openSeaContract?.collection?.slug &&
-        openSeaContract?.schema_name &&
-        ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
-          ? {
-              icon: Icon.NFTEye,
-              href: `https://nfteye.io/collections/${openSeaContract.collection.slug}`,
-            }
-          : null,
+          ? [
+              {
+                icon: Icon.TraitSniper,
+                href: `https://app.traitsniper.com/${address}`,
+              },
+              {
+                icon: Icon.NFTScan,
+                href: `https://www.nftscan.com/${address}`,
+              },
+              openSeaContract?.collection?.slug
+                ? {
+                    icon: Icon.NFTEye,
+                    href: `https://nfteye.io/collections/${openSeaContract.collection.slug}`,
+                  }
+                : null,
+            ]
+          : []),
       ]),
     },
   };
