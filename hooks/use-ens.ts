@@ -6,7 +6,7 @@ export default function useEns(address?: string) {
     address ? ["ens", address] : null,
     async () => {
       const json = await jsonFetcher<{ result: string }>(
-        "https://cloudflare-eth.com/",
+        "https://rpc.ankr.com/eth/",
         {
           method: "POST",
           body: JSON.stringify({

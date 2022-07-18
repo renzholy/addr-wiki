@@ -6,7 +6,7 @@ export default function useCode(address?: string) {
     address ? ["code", address] : null,
     async () => {
       const json = await jsonFetcher<{ result: string }>(
-        "https://cloudflare-eth.com/",
+        "https://rpc.ankr.com/eth/",
         {
           method: "POST",
           body: JSON.stringify({
