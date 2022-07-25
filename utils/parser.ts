@@ -70,6 +70,10 @@ export function parse(
               href: `https://flips.watch/${address}`,
             },
             {
+              icon: Icon.XWatch,
+              href: `https://0x.watch/${address}`,
+            },
+            {
               icon: Icon.Rainbow,
               href: `https://rainbow.me/${address}`,
             },
