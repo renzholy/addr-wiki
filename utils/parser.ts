@@ -287,6 +287,12 @@ export function parse(
               },
               openSeaContract?.collection?.slug
                 ? {
+                    icon: Icon.NFTinit,
+                    href: `https://nftinit.com/assets/${openSeaContract.collection.slug}/live-view`,
+                  }
+                : null,
+              openSeaContract?.collection?.slug
+                ? {
                     icon: Icon.NFTEye,
                     href: `https://nfteye.io/collections/${openSeaContract.collection.slug}`,
                   }
