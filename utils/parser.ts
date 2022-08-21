@@ -120,12 +120,16 @@ export function parse(
                 href: `https://looksrare.org/collections/${address}`,
               },
               {
-                icon: Icon.Rarible,
-                href: `https://rarible.com/collection/${address}/items`,
-              },
-              {
                 icon: Icon.X2Y2,
                 href: `https://x2y2.io/collection/${address}/items`,
+              },
+              {
+                icon: Icon.Sudoswap,
+                href: `https://sudoswap.xyz/#/browse/pools/${address}`,
+              },
+              {
+                icon: Icon.Rarible,
+                href: `https://rarible.com/collection/${address}/items`,
               },
               {
                 icon: Icon.Gem,

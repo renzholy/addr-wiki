@@ -32,6 +32,7 @@ export enum Icon {
   Rainbow = "rainbow.png",
   Rarible = "rarible.svg",
   Reddit = "reddit.svg",
+  Sudoswap = "sudoswap.svg",
   SushiSwap = "sushiswap.svg",
   Telegram = "telegram.svg",
   TraitSniper = "traitsniper.svg",
