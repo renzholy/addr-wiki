@@ -7,6 +7,7 @@ import { Icon, Section } from "./constants";
 
 export function parse(
   address: string,
+  token: string | undefined,
   {
     ens,
     code,
@@ -49,12 +50,13 @@ export function parse(
       openSeaUser?.username ||
       mirror?.displayName ||
       "Unknown",
-    image:
-      openSeaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
-      coinGeckoContract?.image.large ||
-      openSeaUser?.account.profile_img_url?.replace(/=s\d+$/, "") ||
-      mirror?.avatarURL ||
-      "/icons/unknown.svg",
+    image: token
+      ? `https://nft-image-redirect.0x.watch/1/${address}/${token}`
+      : openSeaContract?.collection?.image_url?.replace(/=s\d+$/, "") ||
+        coinGeckoContract?.image.large ||
+        openSeaUser?.account.profile_img_url?.replace(/=s\d+$/, "") ||
+        mirror?.avatarURL ||
+        "/icons/unknown.svg",
     description:
       coinGeckoContract?.description.en ||
       openSeaContract?.description ||
@@ -107,21 +109,29 @@ export function parse(
                 ? [
                     {
                       icon: Icon.Meebits,
-                      href: `https://meebits.app`,
+                      href: token
+                        ? `https://meebits.app/meebits/detail?index=${token}`
+                        : `https://meebits.app`,
                     },
                   ]
                 : []),
               {
                 icon: Icon.OpenSea,
-                href: `https://opensea.io/collection/${openSeaContract.collection.slug}`,
+                href: token
+                  ? `https://opensea.io/assets/ethereum/${address}/${token}`
+                  : `https://opensea.io/collection/${openSeaContract.collection.slug}`,
               },
               {
                 icon: Icon.LooksRare,
-                href: `https://looksrare.org/collections/${address}`,
+                href: `https://looksrare.org/collections/${address}/${
+                  token || ""
+                }`,
               },
               {
                 icon: Icon.X2Y2,
-                href: `https://x2y2.io/collection/${address}/items`,
+                href: token
+                  ? `https://x2y2.io/eth/${address}/${token}`
+                  : `https://x2y2.io/collection/${address}/items`,
               },
               {
                 icon: Icon.Sudoswap,
@@ -129,22 +139,30 @@ export function parse(
               },
               {
                 icon: Icon.Rarible,
-                href: `https://rarible.com/collection/${address}/items`,
+                href: token
+                  ? `https://rarible.com/token/${address}:${token}`
+                  : `https://rarible.com/collection/${address}/items`,
               },
               {
                 icon: Icon.Gem,
-                href: `https://gem.xyz/collection/${address}`,
+                href: token
+                  ? `https://www.gem.xyz/asset/${address}/${token}`
+                  : `https://gem.xyz/collection/${address}`,
               },
               {
                 icon: Icon.Genie,
-                href: `https://www.genie.xyz/collection/${address}`,
+                href: token
+                  ? `https://www.genie.xyz/asset/${address}/${token}`
+                  : `https://www.genie.xyz/collection/${address}`,
               },
             ]
           : openSeaContract?.schema_name === "CRYPTOPUNKS"
           ? [
               {
                 icon: Icon.LarvaLabs,
-                href: "https://cryptopunks.app/",
+                href: token
+                  ? `https://cryptopunks.app/cryptopunks/details/${token}`
+                  : "https://cryptopunks.app/",
               },
             ]
           : openSeaContract?.schema_name === "ERC20"
@@ -246,10 +264,12 @@ export function parse(
             }
           : null,
       ]),
-      [Section.Other]: compact([
+      [Section.Tool]: compact([
         {
           icon: Icon.Etherscan,
-          href: `https://etherscan.io/address/${address}`,
+          href: token
+            ? `https://etherscan.io/nft/${address}/${token}`
+            : `https://etherscan.io/address/${address}`,
         },
         coinGeckoContract
           ? {
@@ -283,11 +303,13 @@ export function parse(
           ? [
               {
                 icon: Icon.TraitSniper,
-                href: `https://app.traitsniper.com/${address}`,
+                href: token
+                  ? `https://app.traitsniper.com/${address}?view=${token}`
+                  : `https://app.traitsniper.com/${address}`,
               },
               {
                 icon: Icon.NFTScan,
-                href: `https://www.nftscan.com/${address}`,
+                href: `https://www.nftscan.com/${address}/${token || ""}`,
               },
               openSeaContract?.collection?.slug
                 ? {

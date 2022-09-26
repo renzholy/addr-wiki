@@ -2,7 +2,7 @@ export enum Section {
   Profile = "Profiles",
   Market = "Markets",
   Social = "Socials",
-  Other = "Others",
+  Tool = "Tools",
 }
 
 export enum Icon {

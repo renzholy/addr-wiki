@@ -6,18 +6,18 @@ import { useRouter } from "next/router";
 import { CSSProperties, Fragment, useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { defaultBlockParse, defaultReactOutput } from "simple-markdown";
-import BlueMark from "../components/blue-mark";
-import ExternalLink from "../components/external-link";
-import useCode from "../hooks/use-code";
-import { useCoinGeckoContract as useCoinGeckoContract } from "../hooks/use-coingecko";
-import { useCurvePool } from "../hooks/use-curve";
-import useEns from "../hooks/use-ens";
-import { useEtherscanSourceCode } from "../hooks/use-etherscan";
-import useMirror from "../hooks/use-mirror";
-import { useOpenSeaContract, useOpenSeaUser } from "../hooks/use-opensea";
-import useSymbol from "../hooks/use-symbol";
-import useTwitter from "../hooks/use-twitter";
-import { parse } from "../utils/parser";
+import BlueMark from "../../components/blue-mark";
+import ExternalLink from "../../components/external-link";
+import useCode from "../../hooks/use-code";
+import { useCoinGeckoContract as useCoinGeckoContract } from "../../hooks/use-coingecko";
+import { useCurvePool } from "../../hooks/use-curve";
+import useEns from "../../hooks/use-ens";
+import { useEtherscanSourceCode } from "../../hooks/use-etherscan";
+import useMirror from "../../hooks/use-mirror";
+import { useOpenSeaContract, useOpenSeaUser } from "../../hooks/use-opensea";
+import useSymbol from "../../hooks/use-symbol";
+import useTwitter from "../../hooks/use-twitter";
+import { parse } from "../../utils/parser";
 
 const headerStyle: CSSProperties = {
   zIndex: 1000,
@@ -38,9 +38,10 @@ const sectionStyle: CSSProperties = {
   lineHeight: 0,
 };
 
-export default function AddressPage() {
+export default function AddressPage(props: { token?: string }) {
   const router = useRouter();
   const address = router.query.address as string | undefined;
+  const token = props.token;
   const { data: ens, isValidating: isValidatingEns } = useEns(address);
   const { data: code, isValidating: isValidatingCode } = useCode(address);
   const { data: openSeaContract, isValidating: isValidatingOpenseaContract } =
@@ -96,18 +97,22 @@ export default function AddressPage() {
   if (!address || !isAddress(address)) {
     return null;
   }
-  const { name, image, description, verified, sections } = parse(address, {
-    ens,
-    code,
-    openSeaContract,
-    openSeaUser,
-    twitter,
-    coinGeckoContract,
-    symbol,
-    etherscanSourceCode,
-    curvePool,
-    mirror,
-  });
+  const { name, image, description, verified, sections } = parse(
+    address,
+    token,
+    {
+      ens,
+      code,
+      openSeaContract,
+      openSeaUser,
+      twitter,
+      coinGeckoContract,
+      symbol,
+      etherscanSourceCode,
+      curvePool,
+      mirror,
+    }
+  );
   return (
     <>
       <Head>
@@ -168,6 +173,12 @@ export default function AddressPage() {
           />
         ) : null}
       </h3>
+      {token ? (
+        <h4 style={{ color: "#f2f4f8", textAlign: "center", marginBottom: 20 }}>
+          {" "}
+          #{token}
+        </h4>
+      ) : null}
       <p
         style={{
           margin: "0 auto",
