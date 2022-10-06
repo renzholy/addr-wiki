@@ -174,7 +174,16 @@ export default function AddressPage(props: { token?: string }) {
         ) : null}
       </h3>
       {token ? (
-        <h4 style={{ color: "#f2f4f8", textAlign: "center", marginBottom: 20 }}>
+        <h4
+          style={{
+            color: "#f2f4f8",
+            textAlign: "center",
+            marginBottom: 20,
+            marginLeft: 20,
+            marginRight: 20,
+            wordBreak: "break-all",
+          }}
+        >
           {" "}
           #{token}
         </h4>
