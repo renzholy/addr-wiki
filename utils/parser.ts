@@ -134,14 +134,8 @@ export function parse(
                   : `https://x2y2.io/collection/${address}/items`,
               },
               {
-                icon: Icon.Sudoswap,
-                href: `https://sudoswap.xyz/#/browse/pools/${address}`,
-              },
-              {
-                icon: Icon.Rarible,
-                href: token
-                  ? `https://rarible.com/token/${address}:${token}`
-                  : `https://rarible.com/collection/${address}/items`,
+                icon: Icon.Blur,
+                href: `https://blur.io/collection/${address}`,
               },
               {
                 icon: Icon.Gem,
@@ -154,6 +148,16 @@ export function parse(
                 href: token
                   ? `https://www.genie.xyz/asset/${address}/${token}`
                   : `https://www.genie.xyz/collection/${address}`,
+              },
+              {
+                icon: Icon.Sudoswap,
+                href: `https://sudoswap.xyz/#/browse/pools/${address}`,
+              },
+              {
+                icon: Icon.Rarible,
+                href: token
+                  ? `https://rarible.com/token/${address}:${token}`
+                  : `https://rarible.com/collection/${address}/items`,
               },
             ]
           : openSeaContract?.schema_name === "CRYPTOPUNKS"

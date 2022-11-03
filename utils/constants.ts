@@ -8,6 +8,7 @@ export enum Section {
 export enum Icon {
   XWatch = "0xwatch.svg",
   OneInch = "1inch.svg",
+  Blur = "blur.png",
   CoinGecko = "coingecko.svg",
   Curve = "curve.svg",
   Debank = "debank.svg",
