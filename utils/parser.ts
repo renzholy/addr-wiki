@@ -10,6 +10,7 @@ export function parse(
   token: string | undefined,
   {
     ens,
+    bit,
     code,
     openSeaContract,
     openSeaUser,
@@ -21,6 +22,7 @@ export function parse(
     mirror,
   }: {
     ens?: string;
+    bit?: string;
     code?: boolean;
     openSeaContract?: OpenSeaContract;
     openSeaUser?: OpenSeaUser;
@@ -41,6 +43,7 @@ export function parse(
   return {
     name:
       ens ||
+      bit ||
       (openSeaContract &&
       ["ERC721", "ERC1155"].includes(openSeaContract.schema_name)
         ? openSeaContract?.collection?.name

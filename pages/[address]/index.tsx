@@ -8,6 +8,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { defaultBlockParse, defaultReactOutput } from "simple-markdown";
 import BlueMark from "../../components/blue-mark";
 import ExternalLink from "../../components/external-link";
+import useBit from "../../hooks/use-bit";
 import useCode from "../../hooks/use-code";
 import { useCoinGeckoContract as useCoinGeckoContract } from "../../hooks/use-coingecko";
 import { useCurvePool } from "../../hooks/use-curve";
@@ -43,6 +44,7 @@ export default function AddressPage(props: { token?: string }) {
   const address = router.query.address as string | undefined;
   const token = props.token;
   const { data: ens, isValidating: isValidatingEns } = useEns(address);
+  const { data: bit, isValidating: isValidatingBit } = useBit(address);
   const { data: code, isValidating: isValidatingCode } = useCode(address);
   const { data: openSeaContract, isValidating: isValidatingOpenseaContract } =
     useOpenSeaContract(code ? address : undefined);
@@ -84,6 +86,7 @@ export default function AddressPage(props: { token?: string }) {
 
   const isValidating =
     isValidatingEns ||
+    isValidatingBit ||
     isValidatingCode ||
     isValidatingOpenseaContract ||
     isValidatingOpenseaUser ||
@@ -102,6 +105,7 @@ export default function AddressPage(props: { token?: string }) {
     token,
     {
       ens,
+      bit,
       code,
       openSeaContract,
       openSeaUser,
