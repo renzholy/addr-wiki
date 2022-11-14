@@ -21,6 +21,7 @@ export default function ExternalLink(props: {
           objectFit: "cover",
           width: size,
           height: size,
+          boxShadow: "0 0 1px 1px #303030",
         }}
       />
     </a>
