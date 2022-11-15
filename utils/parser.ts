@@ -166,7 +166,7 @@ export function parse(
           : openSeaContract?.schema_name === "CRYPTOPUNKS"
           ? [
               {
-                icon: Icon.LarvaLabs,
+                icon: Icon.CryptoPunks,
                 href: token
                   ? `https://cryptopunks.app/cryptopunks/details/${token}`
                   : "https://cryptopunks.app/",
