@@ -13,15 +13,7 @@ export default function useBit(address?: string) {
             jsonrpc: "2.0",
             id: 0,
             method: "das_reverseRecord",
-            params: [
-              {
-                type: "blockchain",
-                key_info: {
-                  key: address,
-                  coin_type: "60",
-                },
-              },
-            ],
+            params: [{ type: "blockchain", key_info: { key: address } }],
           }),
           mode: "cors",
           credentials: "omit",
