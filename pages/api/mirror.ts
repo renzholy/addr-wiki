@@ -1,6 +1,5 @@
 import { isAddress } from "@ethersproject/address";
 import { NextApiRequest, NextApiResponse } from "next";
-import fetch from "node-fetch";
 import { Redis } from "@upstash/redis";
 import { omit } from "lodash-es";
 
