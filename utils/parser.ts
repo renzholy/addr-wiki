@@ -87,6 +87,10 @@ export function parse(
               href: `https://www.nftscan.com/${address}`,
             },
             {
+              icon: Icon.Blur,
+              href: `https://blur.io/${address}`,
+            },
+            {
               icon: Icon.OpenSea,
               href: `https://opensea.io/${address}`,
             },
@@ -119,6 +123,12 @@ export function parse(
                   ]
                 : []),
               {
+                icon: Icon.Blur,
+                href: token
+                  ? `https://blur.io/asset/${address}/${token}`
+                  : `https://blur.io/collection/${address}`,
+              },
+              {
                 icon: Icon.OpenSea,
                 href: token
                   ? `https://opensea.io/assets/ethereum/${address}/${token}`
@@ -135,10 +145,6 @@ export function parse(
                 href: token
                   ? `https://x2y2.io/eth/${address}/${token}`
                   : `https://x2y2.io/collection/${address}/items`,
-              },
-              {
-                icon: Icon.Blur,
-                href: `https://blur.io/collection/${address}`,
               },
               {
                 icon: Icon.Gem,
